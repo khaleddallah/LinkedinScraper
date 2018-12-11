@@ -24,26 +24,43 @@ class LS(scrapy.Spider):
 
 	incookies=dict()
 	inheaders=dict()
-	urlRequest=''
+	urlRequests=[]
+	temp_output=[]
 
 
 	def start_requests(self):
 		self.inheaders['csrf-token']=self.incookies['JSESSIONID']
 		print('\n... cookies reached to LS : \n',self.incookies)
 		print('\n... Request of LS Spider')
-		yield scrapy.Request(url=self.urlRequest,
+		yield scrapy.Request(url=self.root_url,
 				cookies=self.incookies,
-				headers=self.inheaders,
-				callback =self.parse)
+				callback =self.reqRequests)
+
+
+	def reqRequests(self,response):
+		print('\n... reqRequests running')
+		print('\n... urlRequests is \n',self.urlRequests)
+		for req in self.urlRequests:
+			yield scrapy.Request(url=req,headers=self.inheaders,callback=self.parse)
+
 
 
 
 	def parse(self,response):
-		#name of file
-		filename='cache/temp1'
-		with open(filename,'w+') as f:
-			f.write(str(response.text))
+		self.temp_output.append('\n')
+		self.temp_output.append(str(response.request.headers))
+		self.temp_output.append(str(response.text))
+		
 
 
+
+	def saveToFile(self):
+		directory='cache'
+		filename='temp2'
+		filePath='/'.join([directory,filename])
+		if not os.path.exists(directory):
+			os.makedirs(directory)
+		with open(filePath,'w+') as f:
+			f.writelines(temp_output)
 
 

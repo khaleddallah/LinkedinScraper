@@ -4,6 +4,7 @@
 
 
 import scrapy 
+import os
 
 class CL(scrapy.Spider):
 	name='CL'
@@ -57,8 +58,12 @@ class CL(scrapy.Spider):
 		
 
 		#Save Cookies in file 
-		file_path='cookie_files/cookies'
-		with open(file_path ,'w+') as f:
+		directory='cookie_files'
+		filename='cookies'
+		filePath='/'.join([directory,filename])
+		if not os.path.exists(directory):
+			os.makedirs(directory)
+		with open(filePath ,'w+') as f:
 			f.write(str(self.incookies))
 
 		print('\n... Cookies file saved')

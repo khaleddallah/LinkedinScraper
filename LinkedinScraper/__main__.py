@@ -24,6 +24,7 @@ class MainClass :
 		self.email=''
 		self.password=''
 		self.searchUrl=''
+		self.urlRequests=[]
 		self.cookiesParserEnable=False
 		configure_logging()
 		self.runner = CrawlerRunner()
@@ -36,9 +37,10 @@ class MainClass :
 			yield self.runner.crawl(CL,email=self.email
 				,password=self.password)
 			self.incookies=CL.incookies
+		
 		yield self.runner.crawl(LS,
 			incookies=self.incookies,
-			urlRequest=self.urlRequest)
+			urlRequests=self.urlRequests)
 		reactor.stop()
 
 
@@ -83,7 +85,8 @@ class MainClass :
 
 
 	def RequestCreator(self):
-		self.urlRequest='https://www.linkedin.com/voyager/api/search/blended?keywords=Robotic&origin=GLOBAL_SEARCH_HEADER&count=10&queryContext=List(spellCorrectionEnabled-%3Etrue,relatedSearchesEnabled-%3Etrue,kcardTypes-%3EPROFILE)&q=all&filters=List()&start=10'
+		print('\n...  RequestCreator running')
+		self.urlRequests=['https://www.linkedin.com/voyager/api/search/blended?keywords=Robotic&origin=GLOBAL_SEARCH_HEADER&count=10&queryContext=List(spellCorrectionEnabled-%3Etrue,relatedSearchesEnabled-%3Etrue,kcardTypes-%3EPROFILE)&q=all&filters=List()&start=10']
 
 
 
