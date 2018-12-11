@@ -24,7 +24,7 @@ class LS(scrapy.Spider):
 
 	incookies=dict()
 	inheaders=dict()
-	urlRequests=[]
+	finalUrls=[]
 	temp_output=[]
 
 
@@ -39,28 +39,32 @@ class LS(scrapy.Spider):
 
 	def reqRequests(self,response):
 		print('\n... reqRequests running')
-		print('\n... urlRequests is \n',self.urlRequests)
-		for req in self.urlRequests:
+		print('\n... finalUrls is \n',self.finalUrls)
+		for req in self.finalUrls:
 			yield scrapy.Request(url=req,headers=self.inheaders,callback=self.parse)
 
-
+		
 
 
 	def parse(self,response):
-		self.temp_output.append('\n')
 		self.temp_output.append(str(response.request.headers))
+		self.temp_output.append('\n')
 		self.temp_output.append(str(response.text))
-		
-
+		self.temp_output.append('\n')
+	
+	
 
 
 	def saveToFile(self):
 		directory='cache'
-		filename='temp2'
+		filename='temp5'
 		filePath='/'.join([directory,filename])
 		if not os.path.exists(directory):
+			print('\n... Directory created')
 			os.makedirs(directory)
 		with open(filePath,'w+') as f:
-			f.writelines(temp_output)
+			f.writelines(self.temp_output)
 
 
+	def closed( self, reason ):
+		self.saveToFile()

@@ -8,12 +8,11 @@ from scrapy.crawler import CrawlerRunner
 from scrapy.utils.log import configure_logging
 
 import scrapy 
-from scrapy.crawler import CrawlerProcess
 from LinkedinScraper import LS
 from CookiesLinkedin import CL
 from items import Person,Job
 import argparse
-import os , json
+import os , json ,re
 
 class MainClass :
 
@@ -21,13 +20,19 @@ class MainClass :
 	def __init__(self):
 		self.incookies=dict()
 		self.inheaders=dict()
+		
 		self.email=''
 		self.password=''
-		self.searchUrl=''
-		self.urlRequests=[]
+		
+		self.finalUrls=[]
+		
+		self.outputFile=''
+
 		self.cookiesParserEnable=False
+		
 		configure_logging()
 		self.runner = CrawlerRunner()
+
 
 
 	#build spiders
@@ -40,7 +45,7 @@ class MainClass :
 		
 		yield self.runner.crawl(LS,
 			incookies=self.incookies,
-			urlRequests=self.urlRequests)
+			finalUrls=self.finalUrls)
 		reactor.stop()
 
 
@@ -74,20 +79,69 @@ class MainClass :
 		parser=argparse.ArgumentParser(description='Linkedin Scraper\nAuthor: Khaled Dallah',
 									 formatter_class=argparse.RawTextHelpFormatter)
 		parser.add_argument('searchUrl',help="URL of Linkedin search")
-		#parser.add_argument('-e','--email',dest='email',action='store',default='',type=str,
-		#					help='Linkedin Email')
-
+		parser.add_argument('-n','--num',dest='num',action='store',default='10',type=str,
+							help='''num of profiles
+							** the number must be lower or equal of result number
+							\'page\' will parse profiles of url page (10 profiles) (Default)''')
+		parser.add_argument('-o','--output',dest='output',action='store',default='NULL',type=str,
+					help='Output file')
 		args=parser.parse_args()
 
-		self.RequestCreator()
+		self.UrlCreator(args.searchUrl, args.num,args, output,args)
+
+
+
+	#parse args and build final urls
+	def RequestCreator(self,searchUrl,num,output):
+		nosp=0 #Num of Search Pages
+
+		#num
+		if(num=='first'):
+			nosp=1
+		else:
+			nosp=getNosp(CCN(num))
+
+
+		#output 
+		if (output=='NULL'):
+			#get keyword value
+			self.outputFile=re.findall('.*keywords=(.*)&.*',searchUrl)[0].replace('%20','_')
+		else:
+			self.outputFile=output
+
+
+		#build final urls
+		PagePrm=False
+		if('page' not in searchUrl):
+			finalUrls.append(searchUrl)
+			nosp-=1
+			PagePrm=False
+		for i in range(nosp):
+			if(not PagePrm):
+				finalUrls.append(searchUrl+'$page='+str(i+2))
+			else:
+				finalUrls.append(searchUrl.)
 
 
 
 
-	def RequestCreator(self):
-		print('\n...  RequestCreator running')
-		self.urlRequests=['https://www.linkedin.com/voyager/api/search/blended?keywords=Robotic&origin=GLOBAL_SEARCH_HEADER&count=10&queryContext=List(spellCorrectionEnabled-%3Etrue,relatedSearchesEnabled-%3Etrue,kcardTypes-%3EPROFILE)&q=all&filters=List()&start=10']
 
+	#Check Correct Num
+	def CCN(self,num):
+		try:
+			return(int(num))
+		except:
+			print('\n... NUM is wrong\n')
+			exit(0)
+
+
+	#get the nosp(Num of search page):
+	def getNosp(self,num):
+		nosp=0
+		nosp=num//10
+		if((num%10)>0):
+			nosp+=1
+		return (nosp)
 
 
 
