@@ -24,15 +24,14 @@ class LS(scrapy.Spider):
 
 	incookies=dict()
 	inheaders=dict()
-	searchUrl='https://www.linkedin.com/in/raneem-khallouf-517892169'
-	
+	urlRequest=''
 
 
 	def start_requests(self):
 		self.inheaders['csrf-token']=self.incookies['JSESSIONID']
 		print('\n... cookies reached to LS : \n',self.incookies)
 		print('\n... Request of LS Spider')
-		yield scrapy.Request(url=self.searchUrl,
+		yield scrapy.Request(url=self.urlRequest,
 				cookies=self.incookies,
 				headers=self.inheaders,
 				callback =self.parse)

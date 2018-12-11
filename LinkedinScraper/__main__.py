@@ -37,7 +37,8 @@ class MainClass :
 				,password=self.password)
 			self.incookies=CL.incookies
 		yield self.runner.crawl(LS,
-			incookies=self.incookies)
+			incookies=self.incookies,
+			urlRequest=self.urlRequest)
 		reactor.stop()
 
 
@@ -70,19 +71,20 @@ class MainClass :
 		#Parse arguments
 		parser=argparse.ArgumentParser(description='Linkedin Scraper\nAuthor: Khaled Dallah',
 									 formatter_class=argparse.RawTextHelpFormatter)
-		parser.add_argument('keywords',help="Set search words")
+		parser.add_argument('searchUrl',help="URL of Linkedin search")
 		#parser.add_argument('-e','--email',dest='email',action='store',default='',type=str,
 		#					help='Linkedin Email')
 
 		args=parser.parse_args()
 
-		#Create the search Url
-		self.urlCreater(args)
+		self.RequestCreator()
 
 
-	#Create Url using 
-	def urlCreater(self,args):
-		self.searchUrl='https://www.linkedin.com/in/raneem-khallouf-517892169'
+
+
+	def RequestCreator(self):
+		self.urlRequest='https://www.linkedin.com/voyager/api/search/blended?keywords=Robotic&origin=GLOBAL_SEARCH_HEADER&count=10&queryContext=List(spellCorrectionEnabled-%3Etrue,relatedSearchesEnabled-%3Etrue,kcardTypes-%3EPROFILE)&q=all&filters=List()&start=10'
+
 
 
 
