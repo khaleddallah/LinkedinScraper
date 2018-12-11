@@ -105,22 +105,29 @@ class MainClass :
 		#output 
 		if (output=='NULL'):
 			#get keyword value
-			self.outputFile=re.findall('.*keywords=(.*)&.*',searchUrl)[0].replace('%20','_')
+			self.outputFile=re.findall('.*keywords=(.*?)&.*',searchUrl)[0].replace('%20','_')
 		else:
 			self.outputFile=output
 
 
 		#build final urls
-		PagePrm=False
 		if('page' not in searchUrl):
 			finalUrls.append(searchUrl)
 			nosp-=1
-			PagePrm=False
-		for i in range(nosp):
-			if(not PagePrm):
-				finalUrls.append(searchUrl+'$page='+str(i+2))
+		else:
+			a=searchUrl.find('page')
+			part1=searchUrl[:(a-1)]
+
+			b=searchUrl[a:].find('&')
+			if(b=-1):
+				searchUrl=part1
 			else:
-				finalUrls.append(searchUrl.)
+				searchUrl=searchUrl[:(a-1)]+
+
+
+		for i in range(nosp):
+			finalUrls.append(searchUrl+'$page='+str(i+2))
+
 
 
 
