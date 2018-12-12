@@ -1,21 +1,18 @@
-import os,re
 
-cookies_file_path='cache/temp5'
-with open(cookies_file_path,'r+') as f:
-	text=f.readlines()
+import argparse
 
+parser=argparse.ArgumentParser(description='Linkedin Scraper\nAuthor: Khaled Dallah',
+							 formatter_class=argparse.RawTextHelpFormatter)
+parser.add_argument('Search URL or Profiles URL',help="URL of Linkedin search",nargs='+')
+parser.add_argument('-n','--num',dest='num',action='store',type=str,default='page',
+					help='''num of profiles
+					** the number must be lower or equal of result number
+					\'page\' will parse profiles of url page (10 profiles) (Default)''')
+parser.add_argument('-o','--output',dest='output',action='store',default='NULL',type=str,
+			help='Output file')
+parser.add_argument('-p','--profile',dest='profiles',action='store_true',default=False,
+			help='Enable Parse Profiles')
 
-# 	print(text,'\n\n\n')
-print('=====================================')
-res=[]
-for t in text:
-	a=re.findall('^\s+{&quot;data&quot;:{&quot;metadata.*',t)
-	if(len(a)>0):
-		res.append(a)
+args=parser.parse_args()
 
-print('################')
-print('res=\n\n')
-print(res[:100])
-print('=============')
-print(res[-100:])
-print('\n\nlen of res is :',len(res))
+print(args)

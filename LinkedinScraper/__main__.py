@@ -9,6 +9,7 @@ from scrapy.utils.log import configure_logging
 
 import scrapy 
 from LinkedinScraper import LS
+from LinkedinProfileScraper import LPS
 from CookiesLinkedin import CL
 from items import Person,Job
 import argparse
@@ -24,29 +25,43 @@ class MainClass :
 		self.email=''
 		self.password=''
 		
-		self.finalUrls=[]
+		self.searchPageUrls=[]
 		
 		self.outputFile=''
 
-		self.cookiesParserEnable=False
+		self.CLenable=False
+		self.LSenable=False
+		self.LPSenable=False
 		
+		self.profileUrls=[]
+
 		configure_logging()
 		self.runner = CrawlerRunner()
-
 
 
 	#build spiders
 	@defer.inlineCallbacks
 	def crawl(self):
-		if(self.cookiesParserEnable):
-			yield self.runner.crawl(CL,email=self.email
-				,password=self.password)
+		print('\n... CLenable : ',self.CLenable)
+		print('\n... LSenable : ',self.LSenable)
+		print('\n... LPSenable : ',self.LPSenable)
+		if(self.CLenable):
+			print('\n... CL')
+			yield self.runner.crawl(CL,email=self.email,
+				password=self.password)
 			self.incookies=CL.incookies
-		
-		yield self.runner.crawl(LS,
-			incookies=self.incookies,
-			finalUrls=self.finalUrls,
-			outputFile=self.outputFile)
+		if(self.LSenable):
+			print('\n... LS')
+			yield self.runner.crawl(LS,
+				incookies=self.incookies,
+				searchPageUrls=self.searchPageUrls,
+				outputFile=self.outputFile)
+			self.profileUrls=LS.profileUrls
+		if(self.LPSenable):
+			print('\n... LPS')
+			yield self.runner.crawl(LPS,
+					incookies=self.incookies,
+					profileUrls=self.profileUrls)
 		reactor.stop()
 
 
@@ -79,58 +94,71 @@ class MainClass :
 		#Parse arguments
 		parser=argparse.ArgumentParser(description='Linkedin Scraper\nAuthor: Khaled Dallah',
 									 formatter_class=argparse.RawTextHelpFormatter)
-		parser.add_argument('searchUrl',help="URL of Linkedin search")
-		parser.add_argument('-n','--num',dest='num',action='store',default='10',type=str,
+		parser.add_argument('searchUrl',help="URL of Linkedin search URL or Profiles URL",nargs='+')
+		parser.add_argument('-n','--num',dest='num',action='store',type=str,default='page',
 							help='''num of profiles
 							** the number must be lower or equal of result number
 							\'page\' will parse profiles of url page (10 profiles) (Default)''')
 		parser.add_argument('-o','--output',dest='output',action='store',default='NULL',type=str,
 					help='Output file')
+		parser.add_argument('-p','--profile',dest='profiles',action='store_true',default=False,
+					help='Enable Parse Profiles')
+
 		args=parser.parse_args()
-
-		self.UrlsCreator(args.searchUrl, args.num, args.output)
-
+		self.UrlsCreator(args.searchUrl, args.num, args.output, args.profiles)
 
 
-	#parse args and build final urls
-	def UrlsCreator(self,searchUrl,num,output):
-		nosp=0 #Num of Search Pages
 
-		#num
-		if(num=='first'):
-			nosp=1
+	#parse args and build searchPage urls
+	def UrlsCreator(self, searchUrl, num, output, profiles):
+		if(profiles):
+			self.LSenable=False
+			self.LPSenable=True
+			self.profileUrls=searchUrl
+		
 		else:
-			nosp=self.getNosp(self.CCN(num))
+			self.LSenable=True
+			self.LPSenable=True
+			nosp=0 #Num of Search Pages
 
-		#output 
-		if (output=='NULL'):
-			#get keyword value
-			self.outputFile=re.findall('.*keywords=(.*?)&.*',searchUrl)[0].replace('%20','_')
-		else:
-			self.outputFile=output
-
-		#build final urls
-		if('page' not in searchUrl):
-			init_page_num=0
-			self.finalUrls.append(searchUrl)
-			nosp-=1
-		else:
-			init_page_num=int(re.findall('.*page=([0-9]*).*',searchUrl)[0])-2
-			a=searchUrl.find('page')
-			part1=searchUrl[:(a-1)]
-			
-			temp_part2=searchUrl[a:]
-			b=temp_part2.find('&')
-			if(b==-1):
-				searchUrl=part1
+			#num
+			if(num=='page'):
+				nosp=1
 			else:
-				part2=temp_part2[(b):]
-				searchUrl=part1+part2
+				nosp=self.getNosp(self.CCN(num))
 
-		for i in range(nosp):
-			temp_url=searchUrl+'&page='+str(init_page_num+i+2)
-			print(i,' : ',temp_url)
-			self.finalUrls.append(temp_url)
+			#output 
+			if (output=='NULL'):
+				#get keyword value
+				self.outputFile=re.findall('.*keywords=(.*?)&.*',searchUrl[0])[0].replace('%20','_')
+			else:
+				self.outputFile=output
+
+			#build searchPage urls
+			if('page' not in searchUrl[0]):
+				init_page_num=0
+				self.searchPageUrls.append(searchUrl[0])
+				nosp-=1
+			else:
+				init_page_num=int(re.findall('.*page=([0-9]*).*',searchUrl[0])[0])-2
+				a=searchUrl[0].find('page')
+				part1=searchUrl[0][:(a-1)]
+				
+				temp_part2=searchUrl[0][a:]
+				b=temp_part2.find('&')
+				if(b==-1):
+					searchUrl[0]=part1
+				else:
+					part2=temp_part2[(b):]
+					searchUrl[0]=part1+part2
+
+			for i in range(nosp):
+				temp_url=searchUrl[0]+'&page='+str(init_page_num+i+2)
+				print(i,' : ',temp_url)
+				self.searchPageUrls.append(temp_url)
+
+
+
 
 
 
@@ -171,9 +199,10 @@ class MainClass :
 		#If Cookies file not exists
 		if (not(self.readCookiesFile())):
 			self.readAccount()
-			self.cookiesParserEnable=True
+			self.CLenable=True
 
 		#Run Spiders
+		print('\n... CRAWL')
 		self.crawl()
 		reactor.run()
 
