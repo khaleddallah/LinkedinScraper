@@ -50,8 +50,11 @@ class LS(scrapy.Spider):
 		for i in (response.text.split('\n')):
 			t=re.findall('\s+{&quot;data&quot;:{&quot;metadata.*',i)
 			if (len(t)>0):
-				self.temp_output.append(json.loads(t[0].replace('&quot;','\"')))
-	
+				dataJson=json.loads(t[0].replace('&quot;','\"'))
+				for j in (dataJson["data"]["elements"][0]["elements"]):
+					self.temp_output.append(j["publicIdentifier"])
+					self.temp_output.append('\n\n')
+				
 	
 
 
@@ -62,11 +65,11 @@ class LS(scrapy.Spider):
 		if not os.path.exists(directory):
 			print('\n... Directory created')
 			os.makedirs(directory)
-		# with open(filePath,'w+') as f:
-		# 	f.writelines(self.temp_output)
-		with open("foobar.json", "w") as json_file:
-			json.dump(self.temp_output[0], json_file, indent=4)
-			json_file.write("\n")  
+		with open(filePath,'w+') as f:
+			f.writelines(self.temp_output)
+		# with open("foobar.json", "w") as json_file:
+		# 	json.dump(self.temp_output[0], json_file, indent=4)
+		# 	json_file.write("\n")  
 
 
 	def closed( self, reason ):
