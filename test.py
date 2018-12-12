@@ -1,20 +1,21 @@
+import os,re
 
-searchUrl='https://www.linkedin.com/search/results/all/?keywords=Robotic&origin=GLOBAL_SEARCH_HEADER&page=2'
-#build final urls
-if('page' not in searchUrl):
-	finalUrls.append(searchUrl)
-	nosp-=1
-else:
-	a=searchUrl.find('page')
-	part1=searchUrl[:(a-1)]
-	
-	temp_part2=searchUrl[a:]
-	b=temp_part2.find('&')
-	if(b=-1):
-		searchUrl=part1
-	else:
-		searchUrl=part1+searchUrl[]
+cookies_file_path='cache/temp5'
+with open(cookies_file_path,'r+') as f:
+	text=f.readlines()
 
 
-for i in range(nosp):
-	finalUrls.append(searchUrl+'$page='+str(i+2))
+# 	print(text,'\n\n\n')
+print('=====================================')
+res=[]
+for t in text:
+	a=re.findall('^\s+{&quot;data&quot;:{&quot;metadata.*',t)
+	if(len(a)>0):
+		res.append(a)
+
+print('################')
+print('res=\n\n')
+print(res[:100])
+print('=============')
+print(res[-100:])
+print('\n\nlen of res is :',len(res))

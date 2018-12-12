@@ -87,20 +87,19 @@ class MainClass :
 					help='Output file')
 		args=parser.parse_args()
 
-		self.UrlCreator(args.searchUrl, args.num,args, output,args)
+		self.UrlsCreator(args.searchUrl, args.num, args.output)
 
 
 
 	#parse args and build final urls
-	def RequestCreator(self,searchUrl,num,output):
+	def UrlsCreator(self,searchUrl,num,output):
 		nosp=0 #Num of Search Pages
 
 		#num
 		if(num=='first'):
 			nosp=1
 		else:
-			nosp=getNosp(CCN(num))
-
+			nosp=self.getNosp(self.CCN(num))
 
 		#output 
 		if (output=='NULL'):
@@ -109,24 +108,28 @@ class MainClass :
 		else:
 			self.outputFile=output
 
-
 		#build final urls
 		if('page' not in searchUrl):
-			finalUrls.append(searchUrl)
+			init_page_num=0
+			self.finalUrls.append(searchUrl)
 			nosp-=1
 		else:
+			init_page_num=int(re.findall('.*page=([0-9]*).*',searchUrl)[0])-2
 			a=searchUrl.find('page')
 			part1=searchUrl[:(a-1)]
-
-			b=searchUrl[a:].find('&')
-			if(b=-1):
+			
+			temp_part2=searchUrl[a:]
+			b=temp_part2.find('&')
+			if(b==-1):
 				searchUrl=part1
 			else:
-				searchUrl=searchUrl[:(a-1)]+
-
+				part2=temp_part2[(b):]
+				searchUrl=part1+part2
 
 		for i in range(nosp):
-			finalUrls.append(searchUrl+'$page='+str(i+2))
+			temp_url=searchUrl+'&page='+str(init_page_num+i+2)
+			print(i,' : ',temp_url)
+			self.finalUrls.append(temp_url)
 
 
 
