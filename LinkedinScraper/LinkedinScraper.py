@@ -25,7 +25,10 @@ class LS(scrapy.Spider):
 	incookies=dict()
 	inheaders=dict()
 	finalUrls=[]
-	temp_output=[]
+	outputFile=''
+	puplicIDs=[]
+	numParsedProfile=0
+
 
 
 	def start_requests(self):
@@ -40,33 +43,36 @@ class LS(scrapy.Spider):
 	def reqRequests(self,response):
 		print('\n... reqRequests running')
 		print('\n... finalUrls is \n',self.finalUrls)
-		for req in self.finalUrls:
+		for req in reversed(self.finalUrls):
 			yield scrapy.Request(url=req,headers=self.inheaders,callback=self.parse)
 
 		
 
 
 	def parse(self,response):
+		#search between lines about dataJson line
 		for i in (response.text.split('\n')):
 			t=re.findall('\s+{&quot;data&quot;:{&quot;metadata.*',i)
 			if (len(t)>0):
 				dataJson=json.loads(t[0].replace('&quot;','\"'))
+				#Get Puplic ID
 				for j in (dataJson["data"]["elements"][0]["elements"]):
-					self.temp_output.append(j["publicIdentifier"])
-					self.temp_output.append('\n\n')
-				
-	
+					try:
+						self.puplicIDs.append('https://www.linkedin.com/in/'+str(j["publicIdentifier"]))
+						self.numParsedProfile+=1
+					except:
+						print('\nNum '+str(self.numParsedProfile+1)+' profile is out of your network and you have limited visibility.')
 
 
 	def saveToFile(self):
 		directory='cache'
-		filename='temp5'
-		filePath='/'.join([directory,filename])
+		filePath='/'.join([directory,self.outputFile])
 		if not os.path.exists(directory):
 			print('\n... Directory created')
 			os.makedirs(directory)
 		with open(filePath,'w+') as f:
-			f.writelines(self.temp_output)
+			temp='\n'.join(self.puplicIDs)
+			f.write(temp)
 		# with open("foobar.json", "w") as json_file:
 		# 	json.dump(self.temp_output[0], json_file, indent=4)
 		# 	json_file.write("\n")  
@@ -74,3 +80,4 @@ class LS(scrapy.Spider):
 
 	def closed( self, reason ):
 		self.saveToFile()
+		print('numParsedProfile is :',self.numParsedProfile)

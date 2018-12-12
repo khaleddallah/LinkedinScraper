@@ -45,7 +45,8 @@ class MainClass :
 		
 		yield self.runner.crawl(LS,
 			incookies=self.incookies,
-			finalUrls=self.finalUrls)
+			finalUrls=self.finalUrls,
+			outputFile=self.outputFile)
 		reactor.stop()
 
 
