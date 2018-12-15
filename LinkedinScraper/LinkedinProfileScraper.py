@@ -8,7 +8,7 @@ from scrapy.crawler import CrawlerProcess
 import re , os
 import json
 from items import Person,Job
-
+from jsonAnalyser import JA
 
 class LPS(scrapy.Spider):
 	name='LPS'
@@ -50,13 +50,24 @@ class LPS(scrapy.Spider):
 
 	def parse(self,response):
 		#search between lines about dataJson line
-		self.temp_output.append(response.text)
+		done=False
 		nameOfProfile=response.url.split('/')[4]
 		for i in (response.text.split('\n')):
 			t=re.findall('\s+{&quot;data&quot;:{&quot;\*profile.*',i)
 			if (len(t)>0):
 				dataJson=json.loads(t[0].replace('&quot;','\"'))
-		self.saveToFile(nameOfProfile,dataJson)
+				done=True
+		if(done):
+			print('\n... Profile : ',response.url)
+			print('\n... DONE')
+			self.saveToFile(nameOfProfile,dataJson)
+			sw=['Abdulhadi']
+			ja=JA(dataJson,nameOfProfile,sw)
+			ja.run()
+
+		else:
+			print('\n... Profile : ',response.url)
+			print('\n!!! ERROR in find Data Section in Profile')
 
 
 	def saveToFile(self,name,dataJson):
@@ -66,8 +77,11 @@ class LPS(scrapy.Spider):
 		# 	temp='\n\n'.join(self.temp_output)
 		# 	f.write(temp)
 		with open(filePath, "w") as json_file:
-			json.dump(dataJson, json_file, indent=4)
-			json_file.write("\n")  
+			try:
+				json.dump(dataJson, json_file, indent=4)
+				json_file.write("\n")
+			except:
+				print('\n!!! ERROR in Json extractor')
 
 
 	# def closed( self, reason ):
@@ -80,3 +94,7 @@ class LPS(scrapy.Spider):
 		if not os.path.exists(directory):
 			print('\n... LPS Directory created')
 			os.makedirs(directory)		
+
+
+
+
