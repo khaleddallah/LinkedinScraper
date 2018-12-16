@@ -66,7 +66,7 @@
                 "rootUrl": "https://media.licdn.com/dms/image/C4D0BAQHy_8S7UJwDXQ/company-logo_",
                 "$type": "com.linkedin.common.VectorImage"
             },
-            "trackingId": "y51g+wMfTtCR6dUyJfZfzw&#61;&#61;",
+            "trackingId": "/dZAQ8O1SgGOzHD5zGVdIg&#61;&#61;",
             "$type": "com.linkedin.voyager.entities.shared.MiniCompany"
         },
         {
@@ -105,7 +105,7 @@
                 "rootUrl": "https://media.licdn.com/dms/image/C560BAQGCyHTd_7hdpg/company-logo_",
                 "$type": "com.linkedin.common.VectorImage"
             },
-            "trackingId": "jhhCmwq/TBOD4SScP4F1nw&#61;&#61;",
+            "trackingId": "qryNTeqgTnCQW0x0ILk/bA&#61;&#61;",
             "$type": "com.linkedin.voyager.entities.shared.MiniCompany"
         },
         {
@@ -144,7 +144,7 @@
                 "rootUrl": "https://media.licdn.com/dms/image/C4D0BAQE5EKsBykuyVg/company-logo_",
                 "$type": "com.linkedin.common.VectorImage"
             },
-            "trackingId": "PTDtoxHjTp6T4BlNDXqHQg&#61;&#61;",
+            "trackingId": "aLNyAANGQ7eMPbioyosnHw&#61;&#61;",
             "$type": "com.linkedin.voyager.entities.shared.MiniCompany"
         },
         {
@@ -275,21 +275,21 @@
         {
             "$deletedFields": [],
             "entityUrn": "urn:li:fs_language:(ACoAAB-IRoEBqXzFGXE3lX4_7C8NHWQ7eUNtL6c,2)",
-            "name": "\u0627\u0646\u0643\u0644\u064a\u0632\u064a\u0629",
+            "name": "انكليزية",
             "proficiency": "PROFESSIONAL_WORKING",
             "$type": "com.linkedin.voyager.identity.profile.Language"
         },
         {
             "$deletedFields": [],
             "entityUrn": "urn:li:fs_language:(ACoAAB-IRoEBqXzFGXE3lX4_7C8NHWQ7eUNtL6c,1)",
-            "name": "\u0627\u0644\u0639\u0631\u0628\u064a\u0629",
+            "name": "العربية",
             "proficiency": "NATIVE_OR_BILINGUAL",
             "$type": "com.linkedin.voyager.identity.profile.Language"
         },
         {
             "$deletedFields": [],
             "entityUrn": "urn:li:fs_language:(ACoAAB-IRoEBqXzFGXE3lX4_7C8NHWQ7eUNtL6c,3)",
-            "name": "\u0627\u0633\u0628\u0627\u0646\u064a\u0629",
+            "name": "اسبانية",
             "proficiency": "ELEMENTARY",
             "$type": "com.linkedin.voyager.identity.profile.Language"
         },
@@ -430,7 +430,7 @@
                 "honors",
                 "promotion"
             ],
-            "locationName": "\u0633\u0648\u0631\u064a\u0627",
+            "locationName": "سوريا",
             "entityUrn": "urn:li:fs_position:(ACoAAB-IRoEBqXzFGXE3lX4_7C8NHWQ7eUNtL6c,1382867886)",
             "companyName": "Al Rasheed University ",
             "timePeriod": {
@@ -456,7 +456,7 @@
                 "honors",
                 "promotion"
             ],
-            "locationName": "\u0633\u0648\u0631\u064a\u0629 ",
+            "locationName": "سورية ",
             "entityUrn": "urn:li:fs_position:(ACoAAB-IRoEBqXzFGXE3lX4_7C8NHWQ7eUNtL6c,977373759)",
             "companyName": "Damascus University",
             "timePeriod": {
@@ -474,7 +474,7 @@
                 "*miniCompany": "urn:li:fs_miniCompany:15099337",
                 "$type": "com.linkedin.voyager.identity.profile.PositionCompany"
             },
-            "title": "\u0645\u062f\u0631\u0633  \u0645\u062e\u0628\u0631\u064a ",
+            "title": "مدرس  مخبري ",
             "companyUrn": "urn:li:fs_miniCompany:15099337",
             "$type": "com.linkedin.voyager.identity.profile.Position"
         },
@@ -700,7 +700,7 @@
             "$type": "com.linkedin.voyager.identity.profile.PositionView"
         },
         {
-            "summary": "Experience in informatics in all its aspects&#92;n I like technology  and artificial intelligence field   &#92;n",
+            "summary": "Experience in informatics in all its aspects\n I like technology  and artificial intelligence field   \n",
             "industryName": "Internet",
             "lastName": "Awad",
             "supportedLocales": [
@@ -984,7 +984,7 @@
                 "rootUrl": "https://media.licdn.com/dms/image/C4D03AQGOiMvVuou-Kw/profile-displayphoto-shrink_",
                 "$type": "com.linkedin.common.VectorImage"
             },
-            "trackingId": "QFtRrkCeRHOjuygZm3SvWA&#61;&#61;",
+            "trackingId": "CA1MZDJlSUixyfBD11S2MQ&#61;&#61;",
             "$type": "com.linkedin.voyager.identity.shared.MiniProfile"
         }
     ]

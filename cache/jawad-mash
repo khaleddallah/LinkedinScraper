@@ -66,7 +66,7 @@
                 "rootUrl": "https://media.licdn.com/dms/image/C4E0BAQFRNQHZAh6WKw/company-logo_",
                 "$type": "com.linkedin.common.VectorImage"
             },
-            "trackingId": "LWRFdsFxQnadevHSPVPGGQ&#61;&#61;",
+            "trackingId": "4N4T38fZRBKipcIf+EKVhg&#61;&#61;",
             "$type": "com.linkedin.voyager.entities.shared.MiniCompany"
         },
         {
@@ -197,7 +197,7 @@
                 "issueDate"
             ],
             "entityUrn": "urn:li:fs_honor:(ACoAACVgS9UBlrYi7btqz-otDVXcAwQw70g2leI,827490898)",
-            "description": "1st Place in 2014 first semester &#92;n1st Place in 2016 second semester&#92;n2nd place in semesters spanning the period between 20142 and 20161&#92;nAGPA of 3.52/4.0 or ",
+            "description": "1st Place in 2014 first semester \n1st Place in 2016 second semester\n2nd place in semesters spanning the period between 20142 and 20161\nAGPA of 3.52/4.0 or ",
             "title": "Award for Academic Excellence",
             "issuer": "Yarmouk Private University",
             "$type": "com.linkedin.voyager.identity.profile.Honor"
@@ -464,7 +464,7 @@
             "$type": "com.linkedin.voyager.identity.profile.PositionView"
         },
         {
-            "summary": "A simple human with the goals of facilitating the lives of others, building a better future and continuing the voyage of universe exploration through the acquirement of knowledge, sheer perseverance, and a work hard mentality.  &#92;n",
+            "summary": "A simple human with the goals of facilitating the lives of others, building a better future and continuing the voyage of universe exploration through the acquirement of knowledge, sheer perseverance, and a work hard mentality.  \n",
             "industryName": "Computer Software",
             "lastName": "Mashhadiea",
             "supportedLocales": [
@@ -531,7 +531,7 @@
                 },
                 "$type": "com.linkedin.voyager.common.DateRange"
             },
-            "description": "CarHub provides you the nearest automotive service provider to assist you in the shortest time. It is a platform that connects customers with service providers by offering them a hassle-free experience, reliable, and convenience.&#92;nKey features:&#92;n- Add the model of your car(s).&#92;n- Choose to change the car&#39;s Oil &amp; Filter.&#92;n- Find the nearest location to you from the map&#92;n- Pay using different options",
+            "description": "CarHub provides you the nearest automotive service provider to assist you in the shortest time. It is a platform that connects customers with service providers by offering them a hassle-free experience, reliable, and convenience.\nKey features:\n- Add the model of your car(s).\n- Choose to change the car&#39;s Oil &amp; Filter.\n- Find the nearest location to you from the map\n- Pay using different options",
             "title": "CarHub",
             "url": "https://play.google.com/store/apps/details?id&#61;com.aljoil.carhub&amp;hl&#61;en_US",
             "$type": "com.linkedin.voyager.identity.profile.Project",
@@ -557,7 +557,7 @@
                 },
                 "$type": "com.linkedin.voyager.common.DateRange"
             },
-            "description": "A mobile app and an accompanying web system that helps students in giving their feedback to the university regarding their college-life experience .&#92;nKey Features:&#92;n- Keeps student up-to-date with their enrolled courses.&#92;n- A powerful web-app that allows the university to view relevant statistics, information about and opinions of their students.",
+            "description": "A mobile app and an accompanying web system that helps students in giving their feedback to the university regarding their college-life experience .\nKey Features:\n- Keeps student up-to-date with their enrolled courses.\n- A powerful web-app that allows the university to view relevant statistics, information about and opinions of their students.",
             "title": "University System",
             "url": "http://ypu.herokuapp.com",
             "$type": "com.linkedin.voyager.identity.profile.Project",
@@ -578,7 +578,7 @@
                 },
                 "$type": "com.linkedin.voyager.common.DateRange"
             },
-            "description": "ADNOC Distribution\u2019s new app is tailored to your lifestyle \u2013 at home and on the go! With a tap of a button, you can locate your nearest ADNOC Distribution service stations, order LPG cylinders to your home, and manage your financial transactions with us.&#92;nKey features:&#92;n- Find your nearest station&#92;n- Order LPG Cylinder&#92;n- Order Gasoline to your car&#92;n- Manage your ADNOC Wallet",
+            "description": "ADNOC Distribution\u2019s new app is tailored to your lifestyle \u2013 at home and on the go! With a tap of a button, you can locate your nearest ADNOC Distribution service stations, order LPG cylinders to your home, and manage your financial transactions with us.\nKey features:\n- Find your nearest station\n- Order LPG Cylinder\n- Order Gasoline to your car\n- Manage your ADNOC Wallet",
             "title": "ADNOC Dist",
             "url": "https://play.google.com/store/apps/details?id&#61;ae.gov.adnoc&amp;hl&#61;en&amp;showAllReviews&#61;true",
             "$type": "com.linkedin.voyager.identity.profile.Project",
@@ -605,7 +605,7 @@
                 },
                 "$type": "com.linkedin.voyager.common.DateRange"
             },
-            "description": "A habit tracking app that aims to push people to achieve more and be more productive through an intuitive game-like mechanics and positive reinforcement.&#92;nKey features:&#92;n-Beautiful dynamic design that changes throughout the day.&#92;n-Game-like mechanics with points, badges, and achievements system.&#92;n-Beautifully presented relevant statistics about habit&#39;s progression and completion.",
+            "description": "A habit tracking app that aims to push people to achieve more and be more productive through an intuitive game-like mechanics and positive reinforcement.\nKey features:\n-Beautiful dynamic design that changes throughout the day.\n-Game-like mechanics with points, badges, and achievements system.\n-Beautifully presented relevant statistics about habit&#39;s progression and completion.",
             "title": "ACT",
             "$type": "com.linkedin.voyager.identity.profile.Project",
             "*members": [
@@ -803,7 +803,7 @@
                 "rootUrl": "https://media.licdn.com/dms/image/C5603AQF935PrBuxv2Q/profile-displayphoto-shrink_",
                 "$type": "com.linkedin.common.VectorImage"
             },
-            "trackingId": "RuE1M7TdRviXb4CHfvJ/7A&#61;&#61;",
+            "trackingId": "MOUm0SmIRjG9QOy4lErfaw&#61;&#61;",
             "$type": "com.linkedin.voyager.identity.shared.MiniProfile"
         }
     ]

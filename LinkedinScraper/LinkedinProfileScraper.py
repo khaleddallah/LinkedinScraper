@@ -2,13 +2,14 @@
 # Author : Khaled Dallah
 # Date : 8-12-2018
 
-
 import scrapy 
 from scrapy.crawler import CrawlerProcess
 import re , os
 import json
 from items import Person,Job
 from jsonAnalyser import JA
+from ExportToExcel import Ete
+
 
 class LPS(scrapy.Spider):
 	name='LPS'
@@ -68,7 +69,7 @@ class LPS(scrapy.Spider):
 			print('\n... Profile : ',response.url)
 			print('\n... DONE')
 			self.saveRawFile(nameOfProfile,response.text)
-			self.saveJsonFile(nameOfProfile,dataJson,response)
+			self.saveJsonFile(nameOfProfile,dataJson)
 			self.parseImpData(dataJson,nameOfProfile)
 
 
@@ -86,12 +87,12 @@ class LPS(scrapy.Spider):
 			f.write(text1)
 
 
-	def saveJsonFile(self,name,dataJson,response):
+	def saveJsonFile(self,name,dataJson):
 		directory='cache'
 		filePath='/'.join([directory,name])
 		with open(filePath, "w+") as json_file:
 			try:
-				json.dump(dataJson, json_file, indent=4)
+				json.dump(dataJson, json_file, indent=4, ensure_ascii = False)
 				json_file.write("\n")
 			except:
 				print('\n!!! ERROR in Json extractor')
@@ -103,27 +104,59 @@ class LPS(scrapy.Spider):
 	
 	def parseImpData(self,dataJson,nameOfProfile):
 		sw={
-		'fs_profile':['firstName', 'lastName', 'locationName', 'headline'],
-		'fs_position':['title', 'companyName', 'locationName' ],
-		'fs_education':['degreeName', 'schoolName', 'fieldOfStudy', 'activities'],
-		'fs_volunteerExperience':['companyName', 'role', 'cause'],
-		'fs_skill':['name'],
-		'fs_certification':['authority', 'name', 'licenseNumber'],
-		'fs_course':['name'],
-		'fs_language':['name','proficiency'],
-		'fs_project':['title', 'description', 'url'],
-		'fs_honor':['description', 'title', 'issuer']
+		'fs_profile':[{'firstName':'', 'lastName':'','summary':'', 'locationName':'', 'headline':''}],
+		'fs_position':[{'title':'', 'companyName':'', 'locationName':'' }],
+		'fs_education':[{'degreeName':'', 'schoolName':'', 'fieldOfStudy':'', 'activities':''}],
+		'fs_volunteerExperience':[{'companyName':'', 'role':'', 'cause':''}],
+		'fs_skill':[{'name':''}],
+		'fs_certification':[{'authority':'', 'name':'', 'licenseNumber':''}],
+		'fs_course':[{'name':''}],
+		'fs_language':[{'name':'','proficiency':''}],
+		'fs_project':[{'title':'', 'description':'', 'url':''}],
+		'fs_honor':[{'description':'', 'title':'', 'issuer':''}],
+		'fs_miniProfile':[{'picture':{},'firstName':''}]
 			}
 		ja=JA(dataJson,nameOfProfile,sw)
 		ja.run()
-		dataExtractor(ja.saveRes(),sw)
+		FinalData=self.dataExtractor(ja.saveRes(),sw)
+		print('\n............................................\n')
+		FinalData['fs_miniProfile']=[self.diu(FinalData['fs_miniProfile'],FinalData['fs_profile'][0]['firstName'])]
+		self.saveJsonFile(nameOfProfile+'_finalRes',FinalData)
+		print(FinalData)
+
+
+
+	#Filter Important Section from plus Data
+	def dataExtractor(self,impData,sw):
+		#Final Data
+		fData=impData
+		#loop for all data
+		for i in impData:
+			#loop for saved list in single essential key
+			for j in range(len(impData[i])):
+				#loop for single item in list
+				for k in list(impData[i][j]):
+					if k not in sw[i][0]:
+						del fData[i][j][k]
+
+		return(fData)
 
 
 
 
+	#Get Img Url
+	def diu(self,imgSection,name):
+		tempUrl=''
+		for i in imgSection:
+			if (i['firstName']==name):
+				try:
+					firstSec=i['picture']['rootUrl']
+					secondSec=i['picture']['artifacts'][-1]['fileIdentifyingUrlPathSegment'].replace('&#61;','=').replace('&amp;','&')
+					tempUrl=firstSec+secondSec
+				except:
+					print('\n!!! ERROR in parse picture')
+		return(tempUrl)
 
-	def dataExtractor(self,sw):
-		pass
 
 
 	def chechCacheDir(self):
