@@ -66,7 +66,7 @@
                 "rootUrl": "https://media.licdn.com/dms/image/C4D0BAQHy_8S7UJwDXQ/company-logo_",
                 "$type": "com.linkedin.common.VectorImage"
             },
-            "trackingId": "6yFkF3UoQxiLGA9L8gtTlg&#61;&#61;",
+            "trackingId": "y51g+wMfTtCR6dUyJfZfzw&#61;&#61;",
             "$type": "com.linkedin.voyager.entities.shared.MiniCompany"
         },
         {
@@ -105,7 +105,7 @@
                 "rootUrl": "https://media.licdn.com/dms/image/C560BAQGCyHTd_7hdpg/company-logo_",
                 "$type": "com.linkedin.common.VectorImage"
             },
-            "trackingId": "eQNXVyfKSVONyhaTrD+zQw&#61;&#61;",
+            "trackingId": "jhhCmwq/TBOD4SScP4F1nw&#61;&#61;",
             "$type": "com.linkedin.voyager.entities.shared.MiniCompany"
         },
         {
@@ -144,7 +144,7 @@
                 "rootUrl": "https://media.licdn.com/dms/image/C4D0BAQE5EKsBykuyVg/company-logo_",
                 "$type": "com.linkedin.common.VectorImage"
             },
-            "trackingId": "1i4mxHcnTjizC82L2Fafug&#61;&#61;",
+            "trackingId": "PTDtoxHjTp6T4BlNDXqHQg&#61;&#61;",
             "$type": "com.linkedin.voyager.entities.shared.MiniCompany"
         },
         {
@@ -933,15 +933,15 @@
                 "artifacts": [
                     {
                         "width": 800,
-                        "fileIdentifyingUrlPathSegment": "200_800/0?e&#61;1550102400&amp;v&#61;beta&amp;t&#61;PY696qZ2J2hH0Yc_jomEChnLprCblOdrwcv-rExYvps",
-                        "expiresAt": 1550102400000,
+                        "fileIdentifyingUrlPathSegment": "200_800/0?e&#61;1550707200&amp;v&#61;beta&amp;t&#61;vS5N5MyskOrKL8yR4syen05ujytBGEjjSNnAWFdRpPk",
+                        "expiresAt": 1550707200000,
                         "height": 200,
                         "$type": "com.linkedin.common.VectorArtifact"
                     },
                     {
                         "width": 1400,
-                        "fileIdentifyingUrlPathSegment": "350_1400/0?e&#61;1550102400&amp;v&#61;beta&amp;t&#61;7l8gqb1R_zOFI7Sw28mM0jC76Hgw2-_SdoxqUtsR1zs",
-                        "expiresAt": 1550102400000,
+                        "fileIdentifyingUrlPathSegment": "350_1400/0?e&#61;1550707200&amp;v&#61;beta&amp;t&#61;QJRmGlR050eNGHga9zSxv08eayjFiaUqhMZwCRopvNw",
+                        "expiresAt": 1550707200000,
                         "height": 350,
                         "$type": "com.linkedin.common.VectorArtifact"
                     }
@@ -954,29 +954,29 @@
                 "artifacts": [
                     {
                         "width": 100,
-                        "fileIdentifyingUrlPathSegment": "100_100/0?e&#61;1550102400&amp;v&#61;beta&amp;t&#61;jct1ylkhSF09daEtq8M8lHlt5i5biLk4iH1i9vf6oDs",
-                        "expiresAt": 1550102400000,
+                        "fileIdentifyingUrlPathSegment": "100_100/0?e&#61;1550707200&amp;v&#61;beta&amp;t&#61;6-sh-ETZmn0VmWJ98pJsayJtYpcjseEqGDwWomv845g",
+                        "expiresAt": 1550707200000,
                         "height": 100,
                         "$type": "com.linkedin.common.VectorArtifact"
                     },
                     {
                         "width": 200,
-                        "fileIdentifyingUrlPathSegment": "200_200/0?e&#61;1550102400&amp;v&#61;beta&amp;t&#61;m4IJ01sUmUo6Xv5SIu16i133yRBFylQWB52ZVTNVjXY",
-                        "expiresAt": 1550102400000,
+                        "fileIdentifyingUrlPathSegment": "200_200/0?e&#61;1550707200&amp;v&#61;beta&amp;t&#61;UcKaZINV2VSrzeDtVwuMQ3mewOSBOeEwV1vIlkAGFlg",
+                        "expiresAt": 1550707200000,
                         "height": 200,
                         "$type": "com.linkedin.common.VectorArtifact"
                     },
                     {
                         "width": 400,
-                        "fileIdentifyingUrlPathSegment": "400_400/0?e&#61;1550102400&amp;v&#61;beta&amp;t&#61;bZOsohQyOBAWhvwEkVPtjH5m4n86BD8Wx5DfuvAUrsE",
-                        "expiresAt": 1550102400000,
+                        "fileIdentifyingUrlPathSegment": "400_400/0?e&#61;1550707200&amp;v&#61;beta&amp;t&#61;FD8rk1uK78p5CUJkmibmuuKbJ83rl19yaziRH1uFYDk",
+                        "expiresAt": 1550707200000,
                         "height": 400,
                         "$type": "com.linkedin.common.VectorArtifact"
                     },
                     {
                         "width": 800,
-                        "fileIdentifyingUrlPathSegment": "800_800/0?e&#61;1550102400&amp;v&#61;beta&amp;t&#61;HY02lUcPHCFBG4TTAnQd01BXZ9Ucn1Rlfqihcn5SJuM",
-                        "expiresAt": 1550102400000,
+                        "fileIdentifyingUrlPathSegment": "800_800/0?e&#61;1550707200&amp;v&#61;beta&amp;t&#61;MMAkWerSxuAOHz042_9lGKurvgNTiWZFR7F4fcURCHg",
+                        "expiresAt": 1550707200000,
                         "height": 800,
                         "$type": "com.linkedin.common.VectorArtifact"
                     }
@@ -984,7 +984,7 @@
                 "rootUrl": "https://media.licdn.com/dms/image/C4D03AQGOiMvVuou-Kw/profile-displayphoto-shrink_",
                 "$type": "com.linkedin.common.VectorImage"
             },
-            "trackingId": "OVq6xDRpRnmQsNrkgi9FwA&#61;&#61;",
+            "trackingId": "QFtRrkCeRHOjuygZm3SvWA&#61;&#61;",
             "$type": "com.linkedin.voyager.identity.shared.MiniProfile"
         }
     ]

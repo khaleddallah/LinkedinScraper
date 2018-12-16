@@ -66,7 +66,7 @@
                 "rootUrl": "https://media.licdn.com/dms/image/C4E0BAQFRNQHZAh6WKw/company-logo_",
                 "$type": "com.linkedin.common.VectorImage"
             },
-            "trackingId": "sDDRKcQkS0qXM3r25FlqiA&#61;&#61;",
+            "trackingId": "LWRFdsFxQnadevHSPVPGGQ&#61;&#61;",
             "$type": "com.linkedin.voyager.entities.shared.MiniCompany"
         },
         {
@@ -752,15 +752,15 @@
                 "artifacts": [
                     {
                         "width": 800,
-                        "fileIdentifyingUrlPathSegment": "200_800/0?e&#61;1550102400&amp;v&#61;beta&amp;t&#61;icjvH40ByqaMmmuUricMzCMplhKftEf36zEJUDKBk40",
-                        "expiresAt": 1550102400000,
+                        "fileIdentifyingUrlPathSegment": "200_800/0?e&#61;1550707200&amp;v&#61;beta&amp;t&#61;DARZhdmcsEMLIJfTNS1jX66OQJ7xqpFnOmJfmAyQsa4",
+                        "expiresAt": 1550707200000,
                         "height": 200,
                         "$type": "com.linkedin.common.VectorArtifact"
                     },
                     {
                         "width": 1400,
-                        "fileIdentifyingUrlPathSegment": "350_1400/0?e&#61;1550102400&amp;v&#61;beta&amp;t&#61;4uQJEVQcS-01o3itu6uO6DherOrXs1fvPKuCeVf7jqc",
-                        "expiresAt": 1550102400000,
+                        "fileIdentifyingUrlPathSegment": "350_1400/0?e&#61;1550707200&amp;v&#61;beta&amp;t&#61;W9zw34Lba3Wl2gDTCrM8MBKUiGM1-7uYCe396-8YLA4",
+                        "expiresAt": 1550707200000,
                         "height": 350,
                         "$type": "com.linkedin.common.VectorArtifact"
                     }
@@ -773,29 +773,29 @@
                 "artifacts": [
                     {
                         "width": 100,
-                        "fileIdentifyingUrlPathSegment": "100_100/0?e&#61;1550102400&amp;v&#61;beta&amp;t&#61;DtvaV6g52mbMkzYX2VhothFqBeCS2tgA6kqG1mllRnQ",
-                        "expiresAt": 1550102400000,
+                        "fileIdentifyingUrlPathSegment": "100_100/0?e&#61;1550707200&amp;v&#61;beta&amp;t&#61;6ffHIJajBrI3h09O0Pgkh_IPPYpvJXact5ehNsQe2vI",
+                        "expiresAt": 1550707200000,
                         "height": 100,
                         "$type": "com.linkedin.common.VectorArtifact"
                     },
                     {
                         "width": 200,
-                        "fileIdentifyingUrlPathSegment": "200_200/0?e&#61;1550102400&amp;v&#61;beta&amp;t&#61;ohzhfB1PkBqlFBkSWKRWC5v8Os0JK0le4Rv-pIoYf3M",
-                        "expiresAt": 1550102400000,
+                        "fileIdentifyingUrlPathSegment": "200_200/0?e&#61;1550707200&amp;v&#61;beta&amp;t&#61;YB7gHSANiH9ddcgTpbkUaETDa832_9H7VeifjEbLSx0",
+                        "expiresAt": 1550707200000,
                         "height": 200,
                         "$type": "com.linkedin.common.VectorArtifact"
                     },
                     {
                         "width": 400,
-                        "fileIdentifyingUrlPathSegment": "400_400/0?e&#61;1550102400&amp;v&#61;beta&amp;t&#61;27PByfPccvpTlPC3zN7jNnZa6_7__IhSnXDgI0yDQq4",
-                        "expiresAt": 1550102400000,
+                        "fileIdentifyingUrlPathSegment": "400_400/0?e&#61;1550707200&amp;v&#61;beta&amp;t&#61;ZYT1ls8niD1o_9TKS26NfjX6fd4sT4fvAUPTRK6CeTk",
+                        "expiresAt": 1550707200000,
                         "height": 400,
                         "$type": "com.linkedin.common.VectorArtifact"
                     },
                     {
                         "width": 800,
-                        "fileIdentifyingUrlPathSegment": "800_800/0?e&#61;1550102400&amp;v&#61;beta&amp;t&#61;l7FUDCievZwH44aZ2sK5RAJsiAn7nQV0WrqFN-RQT-I",
-                        "expiresAt": 1550102400000,
+                        "fileIdentifyingUrlPathSegment": "800_800/0?e&#61;1550707200&amp;v&#61;beta&amp;t&#61;HWE6tcMm6UGLjENNKI27tg1_k4-c3Cht-57IMSyXbPo",
+                        "expiresAt": 1550707200000,
                         "height": 800,
                         "$type": "com.linkedin.common.VectorArtifact"
                     }
@@ -803,7 +803,7 @@
                 "rootUrl": "https://media.licdn.com/dms/image/C5603AQF935PrBuxv2Q/profile-displayphoto-shrink_",
                 "$type": "com.linkedin.common.VectorImage"
             },
-            "trackingId": "zbWHlHsZQx+wWJZC9xAL1g&#61;&#61;",
+            "trackingId": "RuE1M7TdRviXb4CHfvJ/7A&#61;&#61;",
             "$type": "com.linkedin.voyager.identity.shared.MiniProfile"
         }
     ]

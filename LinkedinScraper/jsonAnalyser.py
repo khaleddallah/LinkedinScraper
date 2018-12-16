@@ -1,3 +1,5 @@
+import re 
+
 class JA:
 	def __init__(self,jsonData,name,sw):
 		self.name=name
@@ -9,7 +11,10 @@ class JA:
 		self.index=[]
 		#search Words
 		self.sw=sw
+		#result
+		self.res=dict()
 
+		
 	def saver(self):
 		directory='cache'
 		filePath='/'.join([directory,self.name+'_JA'])
@@ -23,8 +28,9 @@ class JA:
 		self.lvl+=1
 		for i in range(len(list1)):
 			#put the index of current item in index list
-			self.index.append(str(i))
+			self.index.append(i)
 			self.out.append(str(self.lvl*4*' ')+'('+str(i)+') ')
+			#self.search(i)
 			self.chkprn(list1[i])
 			#delete last index when we move to next
 			self.index.pop()
@@ -40,6 +46,8 @@ class JA:
 			#put the index of current item in index list
 			self.index.append(i)
 			self.out.append(str(self.lvl*4*' ')+i+' : ')
+			#self.search(i)
+			self.searchEU(i)
 			self.chkprn(dict1[i])
 			#delete last index when we move to next
 			self.index.pop()		
@@ -53,7 +61,7 @@ class JA:
 	def chkprn(self,element):
 		if(type(element)==str):
 			self.out.append(element+'\n')
-			self.search(element)
+			#self.search(element)
 		elif(type(element)==dict):
 			self.dictAn(element)
 		elif(type(element)==list):
@@ -68,7 +76,49 @@ class JA:
 	#make searching about 
 	def search(self,element):
 		if (element in self.sw):
-			print('\n... index of ('+element+') is : '+'.'.join(self.index))
+			if element not in self.res:
+				self.res[element]=['.'.join(self.index)]
+			else:
+				self.res[element].append('.'.join(self.index))
+
+
+
+	#search for "entityUrn" key (special for linkedin )
+	def searchEU(self,element):
+		if (element=="entityUrn"):
+			valueOfEU=self.gValueOfCI(self.index)
+			for i in self.sw:
+				if (re.search('^urn:li:'+i+':.*',valueOfEU)):
+					print(str(self.index))
+					if i not in self.res:
+						self.res[i]=[self.gValueOfCI(self.index[:-1])]
+					else:
+						self.res[i].append(self.gValueOfCI(self.index[:-1]))
+
+
+	#Get value of current Index
+	def gValueOfCI(self,index1):
+		temp=self.jsonData[index1[0]]
+		for i in index1[1:]:
+			temp=temp[i]
+		return (temp)
+
+
+	def saveRes(self):
+		#sort dict
+		sortedRes=dict()
+		l=list(self.res.keys())
+		l.sort()
+		for i in l:
+			sortedRes[i]=self.res[i]
+
+		#save to file
+		directory='cache'
+		filePath='/'.join([directory,self.name+'_ResOfJson'])
+		with open(filePath, "w+") as json_file:
+			json_file.writelines(str(sortedRes))
+
+		return(self.res)
 
 
 

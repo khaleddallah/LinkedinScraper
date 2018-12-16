@@ -55,28 +55,41 @@ class LPS(scrapy.Spider):
 		for i in (response.text.split('\n')):
 			t=re.findall('\s+{&quot;data&quot;:{&quot;\*profile.*',i)
 			if (len(t)>0):
-				dataJson=json.loads(t[0].replace('&quot;','\"'))
-				done=True
+				try:
+					t2=t[0].replace('&quot;','\"')
+					t2=t2.replace('&#92;','\\')
+					self.saveRawFile(nameOfProfile+'_json',t2)
+					dataJson=json.loads(t2)
+					done=True
+
+				except Exception as e: 
+					print("\n!!! ERROR in json loads DATA to dataJson :\n",e)
 		if(done):
 			print('\n... Profile : ',response.url)
 			print('\n... DONE')
-			self.saveToFile(nameOfProfile,dataJson)
-			sw=['Abdulhadi']
-			ja=JA(dataJson,nameOfProfile,sw)
-			ja.run()
+			self.saveRawFile(nameOfProfile,response.text)
+			self.saveJsonFile(nameOfProfile,dataJson,response)
+			self.parseImpData(dataJson,nameOfProfile)
+
 
 		else:
+			self.saveRawFile(nameOfProfile,response.text)
 			print('\n... Profile : ',response.url)
 			print('\n!!! ERROR in find Data Section in Profile')
 
 
-	def saveToFile(self,name,dataJson):
+	def saveRawFile(self,name,text1):
+		directory='cache'
+		rawFilePath='/'.join([directory,str(name+'_raw')])
+		print('\n... writing file ',rawFilePath)
+		with open(rawFilePath,'w+') as f:
+			f.write(text1)
+
+
+	def saveJsonFile(self,name,dataJson,response):
 		directory='cache'
 		filePath='/'.join([directory,name])
-		# with open(filePath,'w+') as f:
-		# 	temp='\n\n'.join(self.temp_output)
-		# 	f.write(temp)
-		with open(filePath, "w") as json_file:
+		with open(filePath, "w+") as json_file:
 			try:
 				json.dump(dataJson, json_file, indent=4)
 				json_file.write("\n")
@@ -88,6 +101,30 @@ class LPS(scrapy.Spider):
 	# 	self.saveToFile()
 	# 	print('numParsedProfile is :',self.numParsedProfile)
 	
+	def parseImpData(self,dataJson,nameOfProfile):
+		sw={
+		'fs_profile':['firstName', 'lastName', 'locationName', 'headline'],
+		'fs_position':['title', 'companyName', 'locationName' ],
+		'fs_education':['degreeName', 'schoolName', 'fieldOfStudy', 'activities'],
+		'fs_volunteerExperience':['companyName', 'role', 'cause'],
+		'fs_skill':['name'],
+		'fs_certification':['authority', 'name', 'licenseNumber'],
+		'fs_course':['name'],
+		'fs_language':['name','proficiency'],
+		'fs_project':['title', 'description', 'url'],
+		'fs_honor':['description', 'title', 'issuer']
+			}
+		ja=JA(dataJson,nameOfProfile,sw)
+		ja.run()
+		dataExtractor(ja.saveRes(),sw)
+
+
+
+
+
+	def dataExtractor(self,sw):
+		pass
+
 
 	def chechCacheDir(self):
 		directory='cache'
