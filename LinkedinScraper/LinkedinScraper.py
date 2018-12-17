@@ -7,7 +7,6 @@ import scrapy
 from scrapy.crawler import CrawlerProcess
 import re , os
 import json
-from items import Person,Job
 
 
 class LS(scrapy.Spider):
@@ -44,7 +43,11 @@ class LS(scrapy.Spider):
 		print('\n... reqRequests running')
 		print('\n... searchPageUrls is \n',self.searchPageUrls)
 		for req in reversed(self.searchPageUrls):
-			yield scrapy.Request(url=req,headers=self.inheaders,callback=self.parse)
+			print('\n... req: ',req)
+			yield scrapy.Request(url=req,
+				headers=self.inheaders,
+				callback=self.parse)
+
 
 		
 
@@ -55,13 +58,27 @@ class LS(scrapy.Spider):
 			t=re.findall('\s+{&quot;data&quot;:{&quot;metadata.*',i)
 			if (len(t)>0):
 				dataJson=json.loads(t[0].replace('&quot;','\"'))
+				with open('cache/test.html','w+') as f:
+					json.dump(dataJson, f, indent=4, ensure_ascii = False)
 				#Get Puplic ID
-				for j in (dataJson["data"]["elements"][0]["elements"]):
-					try:
-						self.profileUrls.append('https://www.linkedin.com/in/'+str(j["publicIdentifier"]))
-						self.numParsedProfile+=1
-					except:
-						print('\nNum '+str(self.numParsedProfile+1)+' profile is out of your network and you have limited visibility.')
+				AllElementsList=[]
+				for e in range(len(dataJson["data"]["elements"])):
+					elements=dataJson["data"]["elements"][e]["elements"]
+					if(len(elements)>0):
+						AllElementsList.append(elements)
+
+				for elements1 in AllElementsList:	
+					for j in elements1:
+						try:
+							tempUrl='https://www.linkedin.com/in/'+str(j["publicIdentifier"])
+							print(tempUrl)
+							self.profileUrls.append(tempUrl)
+							self.numParsedProfile+=1
+						except:
+							print('\nNum '+str(self.numParsedProfile+1)+' profile is out of your network and you have limited visibility.')
+					else:
+						print('\n!!! ERROR : No Data Section found in :\n',response.url)
+
 
 
 	def saveToFile(self):
@@ -80,4 +97,4 @@ class LS(scrapy.Spider):
 
 	def closed( self, reason ):
 		self.saveToFile()
-		print('numParsedProfile is :',self.numParsedProfile)
+		#print('numParsedProfile is :',self.numParsedProfile)

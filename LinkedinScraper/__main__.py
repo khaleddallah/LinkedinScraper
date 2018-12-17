@@ -6,12 +6,14 @@
 from twisted.internet import reactor, defer
 from scrapy.crawler import CrawlerRunner
 from scrapy.utils.log import configure_logging
-
 import scrapy 
+
 from LinkedinScraper import LS
 from LinkedinProfileScraper import LPS
 from CookiesLinkedin import CL
-from items import Person,Job
+from ExportToExcel import Ete
+
+
 import argparse
 import os , json ,re
 
@@ -35,6 +37,8 @@ class MainClass :
 		
 		self.profileUrls=[]
 
+		self.finalData=[]
+
 		configure_logging()
 		self.runner = CrawlerRunner()
 
@@ -56,12 +60,15 @@ class MainClass :
 				incookies=self.incookies,
 				searchPageUrls=self.searchPageUrls,
 				outputFile=self.outputFile)
+			#print('\n.............######............\n',LS.profileUrls)
 			self.profileUrls=LS.profileUrls
 		if(self.LPSenable):
 			print('\n... LPS')
 			yield self.runner.crawl(LPS,
 					incookies=self.incookies,
-					profileUrls=self.profileUrls)
+					profileUrls=self.profileUrls,
+					outputFile=self.outputFile)
+			self.finalData=LPS.FinalRess
 		reactor.stop()
 
 
@@ -112,9 +119,13 @@ class MainClass :
 	#parse args and build searchPage urls
 	def UrlsCreator(self, searchUrl, num, output, profiles):
 		if(profiles):
+			#print('\n...Output!@# ',output)
 			self.LSenable=False
 			self.LPSenable=True
 			self.profileUrls=searchUrl
+			#must make error to put output if not set
+			self.outputFile=output
+
 		
 		else:
 			self.LSenable=True
@@ -128,11 +139,13 @@ class MainClass :
 				nosp=self.getNosp(self.CCN(num))
 
 			#output 
+			print('\n... Parsing Output name File')
 			if (output=='NULL'):
 				#get keyword value
 				self.outputFile=re.findall('.*keywords=(.*?)&.*',searchUrl[0])[0].replace('%20','_')
 			else:
 				self.outputFile=output
+			print('\n... ArgParser (fileName):',self.outputFile)
 
 			#build searchPage urls
 			if('page' not in searchUrl[0]):
@@ -205,6 +218,12 @@ class MainClass :
 		print('\n... CRAWL')
 		self.crawl()
 		reactor.run()
+
+
+		#Export to Excel
+		#print('\n... __main__ outputFile:',self.finalData)
+		ete1=Ete(self.outputFile,self.finalData)
+		ete1.run()
 
 
 

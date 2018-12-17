@@ -6,10 +6,8 @@ import scrapy
 from scrapy.crawler import CrawlerProcess
 import re , os
 import json
-from items import Person,Job
 from jsonAnalyser import JA
-from ExportToExcel import Ete
-
+import html
 
 class LPS(scrapy.Spider):
 	name='LPS'
@@ -28,7 +26,7 @@ class LPS(scrapy.Spider):
 	profileUrls=[]
 	temp_output=[]
 	outputFile=''
-
+	FinalRess=[]
 
 
 	def start_requests(self):
@@ -57,34 +55,24 @@ class LPS(scrapy.Spider):
 			t=re.findall('\s+{&quot;data&quot;:{&quot;\*profile.*',i)
 			if (len(t)>0):
 				try:
-					t2=t[0].replace('&quot;','\"')
-					t2=t2.replace('&#92;','\\')
-					self.saveRawFile(nameOfProfile+'_json',t2)
+					t2=html.unescape(t[0])
+					# self.saveRawFile(nameOfProfile+'_json',t2)
 					dataJson=json.loads(t2)
 					done=True
-
 				except Exception as e: 
 					print("\n!!! ERROR in json loads DATA to dataJson :\n",e)
 		if(done):
 			print('\n... Profile : ',response.url)
 			print('\n... DONE')
-			self.saveRawFile(nameOfProfile,response.text)
-			self.saveJsonFile(nameOfProfile,dataJson)
+			#self.saveRawFile(nameOfProfile,response.text)
+			#self.saveJsonFile(nameOfProfile,dataJson)
 			self.parseImpData(dataJson,nameOfProfile)
-
-
 		else:
 			self.saveRawFile(nameOfProfile,response.text)
 			print('\n... Profile : ',response.url)
 			print('\n!!! ERROR in find Data Section in Profile')
 
 
-	def saveRawFile(self,name,text1):
-		directory='cache'
-		rawFilePath='/'.join([directory,str(name+'_raw')])
-		print('\n... writing file ',rawFilePath)
-		with open(rawFilePath,'w+') as f:
-			f.write(text1)
 
 
 	def saveJsonFile(self,name,dataJson):
@@ -93,12 +81,13 @@ class LPS(scrapy.Spider):
 		with open(filePath, "w+") as json_file:
 			try:
 				json.dump(dataJson, json_file, indent=4, ensure_ascii = False)
-				json_file.write("\n")
+				#json_file.write("\n")
 			except:
 				print('\n!!! ERROR in Json extractor')
 
 
 	# def closed( self, reason ):
+	# 	ete=Ete()
 	# 	self.saveToFile()
 	# 	print('numParsedProfile is :',self.numParsedProfile)
 	
@@ -122,7 +111,7 @@ class LPS(scrapy.Spider):
 		print('\n............................................\n')
 		FinalData['fs_miniProfile']=[self.diu(FinalData['fs_miniProfile'],FinalData['fs_profile'][0]['firstName'])]
 		self.saveJsonFile(nameOfProfile+'_finalRes',FinalData)
-		print(FinalData)
+		self.FinalRess.append(FinalData)
 
 
 
@@ -151,7 +140,7 @@ class LPS(scrapy.Spider):
 			if (i['firstName']==name):
 				try:
 					firstSec=i['picture']['rootUrl']
-					secondSec=i['picture']['artifacts'][-1]['fileIdentifyingUrlPathSegment'].replace('&#61;','=').replace('&amp;','&')
+					secondSec=html.unescape(i['picture']['artifacts'][-1]['fileIdentifyingUrlPathSegment'])
 					tempUrl=firstSec+secondSec
 				except:
 					print('\n!!! ERROR in parse picture')
@@ -166,5 +155,13 @@ class LPS(scrapy.Spider):
 			os.makedirs(directory)		
 
 
+	# def saveRawFile(self,name,text1):
+	# 	directory='cache'
+	# 	rawFilePath='/'.join([directory,str(name+'_raw')])
+	# 	print('\n... writing file ',rawFilePath)
+	# 	with open(rawFilePath,'w+') as f:
+	# 		f.write(text1)
 
 
+	# def closed( self, reason ):
+		# print('\n... FinalRess is :\n',self.FinalRess)

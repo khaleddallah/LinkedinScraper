@@ -4,61 +4,19 @@ from openpyxl.utils import get_column_letter
 from openpyxl.styles import Alignment
 import json
 import numpy as np
+from openpyxl.drawing.image import Image
+from openpyxl import load_workbook
+from shutil import copyfile
+from copy import copy
+
 
 
 class Ete :
-	#Set the Input & Output 	
-	def __init__(self,name,data):
-		self.filePath='../Output/'+name
-		self.data=data
-
-
-	#Open Excel file and first sheet 
-	def open_file_sheet(self):
-		self.wb = Workbook()
-		self.ws1 = self.wb.create_sheet(title="first")
-
-	#Save Excel file
-	def save_file(self):
-		self.wb.save(filename = self.filePath)
-
-
-
-	#Write header data to Exel file
-	def write_header(self):
-		al = Alignment(horizontal="center", vertical="center")
-
-
-		#additon for merge cell
-		amc=1
-		for i in self.data:
-			temp=self.ws1.cell(column=amc , row=1 , value=i )
-			temp.alignment=al
-			shift=len(self.data[i][0])
-			#print ('merge from ',i,'to',i+shift)
-			self.ws1.merge_cells(start_row=1, start_column=amc, end_row=1, end_column=amc+shift-1)
-			print("\n... Printing ",i,"in col ",amc,' and make marge from ',amc,' to ',amc+shift-1)
-			subind=0
-			for j in self.data[i][0]:
-				temp=self.ws1.cell(column=amc+subind , row=2 , value=j )
-				temp.alignment=al
-				subind+=1
-
-			amc+=shift
-
-
-
-
-	def run(self):
-		self.open_file_sheet()
-		self.write_header()
-		self.save_file()
-
-
-
-def main():
-	sw={
-	'fs_profile':[{'firstName':'', 'lastName':'','summary':'', 'locationName':'', 'headline':''}],
+	#current Available row to load data in it
+	rowIndex=4
+	picture=''
+	header={
+	'fs_profile':[{'firstName':'', 'lastName':'', 'locationName':'', 'headline':'','summary':''}],
 	'fs_position':[{'title':'', 'companyName':'', 'locationName':'' }],
 	'fs_education':[{'degreeName':'', 'schoolName':'', 'fieldOfStudy':'', 'activities':''}],
 	'fs_volunteerExperience':[{'companyName':'', 'role':'', 'cause':''}],
@@ -67,17 +25,142 @@ def main():
 	'fs_course':[{'name':''}],
 	'fs_language':[{'name':'','proficiency':''}],
 	'fs_project':[{'title':'', 'description':'', 'url':''}],
-	'fs_honor':[{'description':'', 'title':'', 'issuer':''}],
-	'fs_miniProfile':[{'picture':{},'firstName':''}]
-		}
+	'fs_honor':[{'description':'', 'title':'', 'issuer':''}]
+	}
+
+	#Set the Input & Output 	
+	def __init__(self,name,data):
+		self.filePath='Output/'+name+'.xlsx'
+		self.data=data
+
+
+	#Open Excel file and first sheet 
+	def open_file_sheet(self):
+		print('excel file path : ',self.filePath)
+		copyfile('Output/atemp.xlsx',self.filePath)
+		self.wb1 = load_workbook(self.filePath)
+		self.ws1 = self.wb1['first']
+		self.dh=[s for s in self.ws1[2]]
+
+	#Save Excel file
+	def save_file(self):
+		self.wb1.save(filename = self.filePath)
+
+
+	#Not useful after we use template
+	#Write header data to Exel file
+	def write_header(self):
+		#additon for merge cell colomn
+		amc=1
+		for i in self.header:
+			temp=self.ws1.cell(column=amc , row=1 , value=i[3:] )
+			temp.alignment=self.al
+			shift=len(self.header[i][0])
+			self.ws1.merge_cells(start_row=1, start_column=amc, end_row=1, end_column=amc+shift-1)
+			#print("\n... Printing ",i,"in col ",amc,' and make marge from ',amc,' to ',amc+shift-1)
+			subind=0
+			for j in self.header[i][0]:
+				temp=self.ws1.cell(column=amc+subind , row=2 , value=j )
+				temp.alignment=self.al
+				subind+=1
+			amc+=shift
+
+
+	
+
+	# #Function for image
+	# def image_loader(self,url):
+	# 	#download Img
+	# 	img = Image('../cache/fff.png')
+	# 	self.ws1.add_image(img, 'A1')
+
+	#Function Data Loader
+	def single_data_loader(self,sdata):
+		tempRow=self.rowIndex
+		shiftRow=0
+		maxShiftRow=0
+		for i in sdata:
+			#to process picture alone
+			if (i=='fs_miniProfile'):
+				self.picture=sdata[i]
+				continue
+			if(shiftRow>=maxShiftRow):
+				maxShiftRow=shiftRow
+
+			shiftRow=0
+			currentSec=i
+			for j in sdata[i]:
+				shiftRow+=1
+				for k in j:
+					#Get the right colomn
+					tempCol=self.getRightCol(k,currentSec)
+					# print('\n... tempCol=',str(tempCol))
+					# print('\n... tempRow+shiftRow=',str(tempRow+shiftRow))
+					# print('\n... value is ',j[k])
+					temp=self.ws1.cell(column=tempCol , row=tempRow+shiftRow , value=j[k])
+					self.copyStyle(temp,self.dh[tempCol-1])
+
+		self.rowIndex+=1+maxShiftRow
+
+
+
+	def all_data_loader(self):
+		for i in self.data:
+			self.single_data_loader(i)
+			print('\n...rowIndex is :',self.rowIndex)
+
+
+
+	def copyStyle(self,target,src):
+		# target.font = copy(src.font)
+		target.border = copy(src.border)
+		target.fill = copy(src.fill)
+		target.number_format = copy(src.number_format)
+		target.protection = copy(src.protection)
+		target.alignment = copy(src.alignment)		
+
+
+
+	def getRightCol(self,item,currentSec):
+		t1=False
+		t2=False
+		ind=0
+		for i in self.header:
+			if (i==currentSec):
+				t1=True
+			for j in self.header[i][0]:
+				ind+=1
+				if(j==item):
+					t2=True
+					if(t1):
+						return(ind)
+
+		else:
+			print('\n!!! ERROR to find <',item,'>\n')
+			return(-1)
+
+
+	#coloring data
+	def coloring(self):
+		pass
+
+	def run(self):
+		self.open_file_sheet()
+		# self.write_header()
+		self.all_data_loader()
+		self.save_file()
+
+
+
+
+def main():
 	pathh='../cache/jawad-mash_finalRes'
 	with open(pathh,'r+') as f:
 		jsonData=json.load(f)
 
 
-	ete1=Ete('aa.xlsx',sw)
+	ete1=Ete('aa.xlsx',jsonData)
 	ete1.run()
-
 
 
 if __name__=='__main__':

@@ -1,4 +1,5 @@
 import re 
+import html
 
 class JA:
 	def __init__(self,jsonData,name,sw):
@@ -60,7 +61,8 @@ class JA:
 	#if Dict or List it will go to DictAn to process all its elements
 	def chkprn(self,element):
 		if(type(element)==str):
-			self.out.append(element+'\n')
+			#change some keys
+			self.out.append(html.unescape(element)+'\n')
 			#self.search(element)
 		elif(type(element)==dict):
 			self.dictAn(element)
@@ -89,7 +91,7 @@ class JA:
 			valueOfEU=self.gValueOfCI(self.index)
 			for i in self.sw:
 				if (re.search('^urn:li:'+i+':.*',valueOfEU)):
-					print(str(self.index))
+					# print(str(self.index))
 					if i not in self.res:
 						self.res[i]=[self.gValueOfCI(self.index[:-1])]
 					else:
