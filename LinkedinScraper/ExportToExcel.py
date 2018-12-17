@@ -1,7 +1,7 @@
 from openpyxl import Workbook
 from openpyxl.compat import range
 from openpyxl.utils import get_column_letter
-from openpyxl.styles import Alignment
+from openpyxl.styles import Alignment, PatternFill, Border
 import json
 import numpy as np
 from openpyxl.drawing.image import Image
@@ -13,7 +13,7 @@ from copy import copy
 
 class Ete :
 	#current Available row to load data in it
-	rowIndex=4
+	rowIndex=3
 	picture=''
 	header={
 	'fs_profile':[{'firstName':'', 'lastName':'', 'locationName':'', 'headline':'','summary':''}],
@@ -76,7 +76,8 @@ class Ete :
 
 	#Function Data Loader
 	def single_data_loader(self,sdata):
-		tempRow=self.rowIndex
+		fill= PatternFill("solid", fgColor="DDDDDD")
+		border1=copy(self.ws1['A2'].border)
 		shiftRow=0
 		maxShiftRow=0
 		for i in sdata:
@@ -95,12 +96,23 @@ class Ete :
 					#Get the right colomn
 					tempCol=self.getRightCol(k,currentSec)
 					# print('\n... tempCol=',str(tempCol))
-					# print('\n... tempRow+shiftRow=',str(tempRow+shiftRow))
+					# print('\n... self.rowIndex+shiftRow=',str(self.rowIndex+shiftRow))
 					# print('\n... value is ',j[k])
-					temp=self.ws1.cell(column=tempCol , row=tempRow+shiftRow , value=j[k])
+					temp=self.ws1.cell(column=tempCol , row=self.rowIndex+shiftRow , value=j[k])
 					self.copyStyle(temp,self.dh[tempCol-1])
 
+		for rc in range(self.rowIndex+1, self.rowIndex+maxShiftRow+1):
+			for cc in range(len(self.ws1[rc])):
+				curcell=self.ws1.cell(column=cc+1, row=rc)
+				if(curcell.value):
+					continue
+				else:
+					curcell.fill=fill
+					curcell.border = border1
+
 		self.rowIndex+=1+maxShiftRow
+
+
 
 
 
