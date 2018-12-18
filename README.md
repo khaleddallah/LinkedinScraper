@@ -49,7 +49,7 @@ usage: python LinkedinScraper [-h] [-n NUM] [-o OUTPUT] [-p] (searchUrl or profi
 * Parse <b>(</b> https://www.linkedin.com/in/khaled-dallah/ and https://www.linkedin.com/in/linustorvalds/ <b>) profiles</b> and export the result content to <b>ABC.xlsx</b> and <b>ABC.json</b>
 <br>(<b>-p</b>) because of parsing single profiles
 ```
-python LinkedinScraper -p -o 'ABC' 'https://www.linkedin.com/in/khaled-dallah/' 'https://www.linkedin.com/in/reidhoffman/'
+python LinkedinScraper -p -o 'ABC' 'https://www.linkedin.com/in/khaled-dallah/' 'https://www.linkedin.com/in/linustorvalds/'
 ```
 
 
