@@ -86,8 +86,6 @@ class Ete :
 			if (i=='fs_miniProfile'):
 				self.picture=sdata[i]
 				continue
-			if(shiftRow>=maxShiftRow):
-				maxShiftRow=shiftRow
 
 			shiftRow=0
 			currentSec=i
@@ -98,6 +96,9 @@ class Ete :
 					tempCol=self.getRightCol(k,currentSec)
 					temp=self.ws1.cell(column=tempCol , row=self.rowIndex+shiftRow , value=j[k])
 					self.copyStyle(temp,self.dh[tempCol-1])
+
+			if(shiftRow>=maxShiftRow):
+				maxShiftRow=shiftRow
 
 		#Shadow all rows that profile use
 		for rc in range(self.rowIndex+1, self.rowIndex+maxShiftRow+1):
@@ -118,7 +119,6 @@ class Ete :
 	def all_data_loader(self):
 		for i in self.data:
 			self.single_data_loader(i)
-			print('\n...rowIndex is :',self.rowIndex)
 
 
 
