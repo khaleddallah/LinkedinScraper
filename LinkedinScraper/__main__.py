@@ -126,7 +126,12 @@ class MainClass :
 			self.LPSenable=True
 			self.profileUrls=searchUrl
 			#must make error to put output if not set
-			self.outputFile=output
+			if (output=='NULL'):
+				print('\n!!!ERROR : No name for output file\n')
+				print('\n!!!Please set name for output file by -o option')
+				exit()
+			else:
+				self.outputFile=output
 
 		
 		else:
