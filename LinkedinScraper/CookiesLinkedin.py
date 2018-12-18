@@ -1,6 +1,9 @@
 #! /usr/bin/env python
+
 # Author : Khaled Dallah
+# Email : khaled.dallah0@gmail.com
 # Date : 8-12-2018
+
 
 
 import scrapy 
@@ -25,12 +28,13 @@ class CL(scrapy.Spider):
 	email=''
 	password=''
 
-	
+	#FormData 
 	def parse(self,response):
 		print('\n... parse root_url')
 		print('\n... Email: ',self.email)
 		print('\n... Pass: ',self.password)
 		
+
 		#parse csrf param
 		csrf_value=response.css('input[name="loginCsrfParam"]::attr(value)').extract()[0]
 		data={
@@ -43,6 +47,7 @@ class CL(scrapy.Spider):
 		yield scrapy.FormRequest.from_response(response,
 			formdata=data,
 			callback=self.parse_cookies_headers)
+
 
 
 	def parse_cookies_headers(self,response):

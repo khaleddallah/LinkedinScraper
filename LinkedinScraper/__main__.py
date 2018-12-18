@@ -1,7 +1,9 @@
 #! /usr/bin/env python
 
 # Author : Khaled Dallah
+# Email : khaled.dallah0@gmail.com
 # Date : 8-12-2018
+
 
 from twisted.internet import reactor, defer
 from scrapy.crawler import CrawlerRunner
@@ -221,7 +223,6 @@ class MainClass :
 
 
 		#Export to Excel
-		#print('\n... __main__ outputFile:',self.finalData)
 		ete1=Ete(self.outputFile,self.finalData)
 		ete1.run()
 

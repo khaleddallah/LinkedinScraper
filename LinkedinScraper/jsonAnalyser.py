@@ -1,3 +1,10 @@
+#! /usr/bin/env python
+
+# Author : Khaled Dallah
+# Email : khaled.dallah0@gmail.com
+# Date : 8-12-2018
+
+
 import re 
 import html
 
@@ -15,10 +22,11 @@ class JA:
 		#result
 		self.res=dict()
 
-		
+
+	#Write clear json Data to File
 	def saver(self):
 		directory='cache'
-		filePath='/'.join([directory,self.name+'_JA'])
+		filePath='/'.join([directory,self.name+'_Data'])
 		with open(filePath, "w+") as json_file:
 			json_file.writelines(self.out)
 
@@ -91,7 +99,8 @@ class JA:
 			valueOfEU=self.gValueOfCI(self.index)
 			for i in self.sw:
 				if (re.search('^urn:li:'+i+':.*',valueOfEU)):
-					# print(str(self.index))
+					#add to all section that contain Important entityUrn 
+					#(value of entityUrn exist in )
 					if i not in self.res:
 						self.res[i]=[self.gValueOfCI(self.index[:-1])]
 					else:
@@ -106,6 +115,7 @@ class JA:
 		return (temp)
 
 
+	#Save ImpSec Of data and return it
 	def saveRes(self):
 		#sort dict
 		sortedRes=dict()
@@ -116,7 +126,7 @@ class JA:
 
 		#save to file
 		directory='cache'
-		filePath='/'.join([directory,self.name+'_ResOfJson'])
+		filePath='/'.join([directory,self.name+'_ImpSec'])
 		with open(filePath, "w+") as json_file:
 			json_file.writelines(str(sortedRes))
 

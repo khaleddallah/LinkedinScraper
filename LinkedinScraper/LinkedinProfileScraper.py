@@ -1,6 +1,9 @@
 #! /usr/bin/env python
+
 # Author : Khaled Dallah
+# Email : khaled.dallah0@gmail.com
 # Date : 8-12-2018
+
 
 import scrapy 
 from scrapy.crawler import CrawlerProcess
@@ -46,7 +49,7 @@ class LPS(scrapy.Spider):
 			yield scrapy.Request(url=req,headers=self.inheaders,callback=self.parse)
 
 		
-
+	#get Data Section from response
 	def parse(self,response):
 		#search between lines about dataJson line
 		done=False
@@ -56,7 +59,6 @@ class LPS(scrapy.Spider):
 			if (len(t)>0):
 				try:
 					t2=html.unescape(t[0])
-					# self.saveRawFile(nameOfProfile+'_json',t2)
 					dataJson=json.loads(t2)
 					done=True
 				except Exception as e: 
@@ -64,17 +66,14 @@ class LPS(scrapy.Spider):
 		if(done):
 			print('\n... Profile : ',response.url)
 			print('\n... DONE')
-			#self.saveRawFile(nameOfProfile,response.text)
-			#self.saveJsonFile(nameOfProfile,dataJson)
 			self.parseImpData(dataJson,nameOfProfile)
 		else:
-			self.saveRawFile(nameOfProfile,response.text)
 			print('\n... Profile : ',response.url)
 			print('\n!!! ERROR in find Data Section in Profile')
 
 
 
-
+	#Save Json file of jsonData
 	def saveJsonFile(self,name,dataJson):
 		directory='cache'
 		filePath='/'.join([directory,name])
@@ -86,11 +85,7 @@ class LPS(scrapy.Spider):
 				print('\n!!! ERROR in Json extractor')
 
 
-	# def closed( self, reason ):
-	# 	ete=Ete()
-	# 	self.saveToFile()
-	# 	print('numParsedProfile is :',self.numParsedProfile)
-	
+	#Get ImpData Of ImpSection Of Data
 	def parseImpData(self,dataJson,nameOfProfile):
 		sw={
 		'fs_profile':[{'firstName':'', 'lastName':'','summary':'', 'locationName':'', 'headline':''}],
@@ -148,6 +143,7 @@ class LPS(scrapy.Spider):
 
 
 
+
 	def chechCacheDir(self):
 		directory='cache'
 		if not os.path.exists(directory):
@@ -155,13 +151,7 @@ class LPS(scrapy.Spider):
 			os.makedirs(directory)		
 
 
-	# def saveRawFile(self,name,text1):
-	# 	directory='cache'
-	# 	rawFilePath='/'.join([directory,str(name+'_raw')])
-	# 	print('\n... writing file ',rawFilePath)
-	# 	with open(rawFilePath,'w+') as f:
-	# 		f.write(text1)
 
-
-	# def closed( self, reason ):
-		# print('\n... FinalRess is :\n',self.FinalRess)
+	def closed( self, reason ):
+		#save output.json in Output Dir
+		saveJsonFile('../Output/'+self.outputFile+'.json',self.FinalRess)

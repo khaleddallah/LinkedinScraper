@@ -1,5 +1,7 @@
 #! /usr/bin/env python
+
 # Author : Khaled Dallah
+# Email : khaled.dallah0@gmail.com
 # Date : 8-12-2018
 
 
@@ -51,7 +53,7 @@ class LS(scrapy.Spider):
 
 		
 
-
+	#Get profiles URLs
 	def parse(self,response):
 		#search between lines about dataJson line
 		for i in (response.text.split('\n')):
@@ -80,21 +82,22 @@ class LS(scrapy.Spider):
 						print('\n!!! ERROR : No Data Section found in :\n',response.url)
 
 
-
+	#Save profiles URLs
 	def saveToFile(self):
+		#Check Cache Dir
 		directory='cache'
-		filePath='/'.join([directory,str(self.outputFile+'_searchPageUrl')])
 		if not os.path.exists(directory):
 			print('\n... Directory created')
 			os.makedirs(directory)
+
+		filePath='/'.join([directory,str(self.outputFile+'_searchPageUrl')])
+
+		#Save profiles Urls
 		with open(filePath,'w+') as f:
 			temp='\n'.join(self.profileUrls)
 			f.write(temp)
-		# with open("foobar.json", "w") as json_file:
-		# 	json.dump(self.temp_output[0], json_file, indent=4)
-		# 	json_file.write("\n")  
+ 
 
 
 	def closed( self, reason ):
 		self.saveToFile()
-		#print('numParsedProfile is :',self.numParsedProfile)

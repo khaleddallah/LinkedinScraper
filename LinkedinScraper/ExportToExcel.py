@@ -1,13 +1,20 @@
+#! /usr/bin/env python
+
+# Author : Khaled Dallah
+# Email : khaled.dallah0@gmail.com
+# Date : 8-12-2018
+
+
 from openpyxl import Workbook
 from openpyxl.compat import range
 from openpyxl.utils import get_column_letter
 from openpyxl.styles import Alignment, PatternFill, Border
-import json
-import numpy as np
 from openpyxl.drawing.image import Image
 from openpyxl import load_workbook
+
 from shutil import copyfile
 from copy import copy
+import json
 
 
 
@@ -37,7 +44,7 @@ class Ete :
 	#Open Excel file and first sheet 
 	def open_file_sheet(self):
 		print('excel file path : ',self.filePath)
-		copyfile('Output/atemp.xlsx',self.filePath)
+		copyfile('Template/atemp.xlsx',self.filePath)
 		self.wb1 = load_workbook(self.filePath)
 		self.ws1 = self.wb1['first']
 		self.dh=[s for s in self.ws1[2]]
@@ -68,12 +75,6 @@ class Ete :
 
 	
 
-	# #Function for image
-	# def image_loader(self,url):
-	# 	#download Img
-	# 	img = Image('../cache/fff.png')
-	# 	self.ws1.add_image(img, 'A1')
-
 	#Function Data Loader
 	def single_data_loader(self,sdata):
 		fill= PatternFill("solid", fgColor="DDDDDD")
@@ -95,12 +96,10 @@ class Ete :
 				for k in j:
 					#Get the right colomn
 					tempCol=self.getRightCol(k,currentSec)
-					# print('\n... tempCol=',str(tempCol))
-					# print('\n... self.rowIndex+shiftRow=',str(self.rowIndex+shiftRow))
-					# print('\n... value is ',j[k])
 					temp=self.ws1.cell(column=tempCol , row=self.rowIndex+shiftRow , value=j[k])
 					self.copyStyle(temp,self.dh[tempCol-1])
 
+		#Shadow all rows that profile use
 		for rc in range(self.rowIndex+1, self.rowIndex+maxShiftRow+1):
 			for cc in range(len(self.ws1[rc])):
 				curcell=self.ws1.cell(column=cc+1, row=rc)
@@ -115,7 +114,7 @@ class Ete :
 
 
 
-
+	#to parse all Data
 	def all_data_loader(self):
 		for i in self.data:
 			self.single_data_loader(i)
@@ -124,7 +123,6 @@ class Ete :
 
 
 	def copyStyle(self,target,src):
-		# target.font = copy(src.font)
 		target.border = copy(src.border)
 		target.fill = copy(src.fill)
 		target.number_format = copy(src.number_format)
@@ -133,6 +131,7 @@ class Ete :
 
 
 
+	#to put item value data in right cell
 	def getRightCol(self,item,currentSec):
 		t1=False
 		t2=False
@@ -156,9 +155,10 @@ class Ete :
 	def coloring(self):
 		pass
 
+
+	#Run Basic Operation
 	def run(self):
 		self.open_file_sheet()
-		# self.write_header()
 		self.all_data_loader()
 		self.save_file()
 
@@ -166,7 +166,7 @@ class Ete :
 
 
 def main():
-	pathh='../cache/jawad-mash_finalRes'
+	pathh=''
 	with open(pathh,'r+') as f:
 		jsonData=json.load(f)
 
