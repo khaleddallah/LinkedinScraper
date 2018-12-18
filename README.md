@@ -1,5 +1,5 @@
 # Linkedin Scraper Project    
-![](https://github.com/khaleddallah/LinkedinScraperProject/blob/master/Readme-Images/ExcelPicture.gif)
+![](https://github.com/khaleddallah/LinkedinScraperProject/blob/master/Readme-Images/4.png)
 * Scrape number of profiles that exist in result of Linkedin searchUrl.    
 * Export the content of profiles to Excel and Json files.    
     
