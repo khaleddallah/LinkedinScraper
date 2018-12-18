@@ -71,7 +71,10 @@ python LinkedinScraper -n 23 'https://www.linkedin.com/search/results/all/?keywo
 
 ## Issues:   
 Report bugs and feature requests
-[here](https://github.com/khaleddallah/LinkedinScraperProject/issues).
+[here](https://github.com/khaleddallah/LinkedinScraperProject/issues).    
+
+## Contribute   
+Contributions are always welcome! 
 
 ## License
 
