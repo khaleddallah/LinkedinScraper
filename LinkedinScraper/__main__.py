@@ -100,15 +100,26 @@ class MainClass :
 
 	#Parse user input arguments
 	def args_parser(self):
+		example_text='''
+
+
+Examples:
+ $ python LinkedinScraper -p -o 'khaled-dallah' 'https://www.linkedin.com/in/khaled-dallah/'
+ $ python LinkedinScraper -n 23 'https://www.linkedin.com/search/results/all/?keywords=Robotic&origin=GLOBAL_SEARCH_HEADER'
+
+		'''
+
 		#Parse arguments
 		parser=argparse.ArgumentParser(description='Linkedin Scraper\nAuthor: Khaled Dallah',
-									 formatter_class=argparse.RawTextHelpFormatter)
+									 formatter_class=argparse.RawTextHelpFormatter,
+									 epilog=example_text,
+									 usage='python LinkedinScraper [-h] [-n NUM] [-o OUTPUT] [-p] (searchUrl or profilesUrl)')
 		parser.add_argument('searchUrl',help="URL of Linkedin search URL or Profiles URL",nargs='+')
-		parser.add_argument('-n','--num',dest='num',action='store',type=str,default='page',
+		parser.add_argument('-n',dest='num',action='store',type=str,default='page',
 							help='''num of profiles
-							** the number must be lower or equal of result number
-							\'page\' will parse profiles of url page (10 profiles) (Default)''')
-		parser.add_argument('-o','--output',dest='output',action='store',default='NULL',type=str,
+** the number must be lower or equal of result number
+\'page\' will parse profiles of url page (10 profiles) (Default)''')
+		parser.add_argument('-o',dest='output',action='store',default='NULL',type=str,
 					help='Output file')
 		parser.add_argument('-p','--profile',dest='profiles',action='store_true',default=False,
 					help='Enable Parse Profiles')

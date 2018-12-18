@@ -154,4 +154,4 @@ class LPS(scrapy.Spider):
 
 	def closed( self, reason ):
 		#save output.json in Output Dir
-		saveJsonFile('../Output/'+self.outputFile+'.json',self.FinalRess)
+		self.saveJsonFile('../Output/'+self.outputFile+'.json',self.FinalRess)
