@@ -66,7 +66,8 @@ python LinkedinScraper -n 23 'https://www.linkedin.com/search/results/all/?keywo
 
 ## Author
 
-* **Khaled Dallah** - *Software Engineer*
+* **Khaled Dallah** - *Software Engineer*   |   *Python/c++ Developer*    
+khaled.dallah0@gmail.com
 
 
 ## Issues:   
