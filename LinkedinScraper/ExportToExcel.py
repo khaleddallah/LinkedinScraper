@@ -14,7 +14,7 @@ from openpyxl import load_workbook
 
 from shutil import copyfile
 from copy import copy
-import json
+import json, os
 
 
 
@@ -37,7 +37,10 @@ class Ete :
 
 	#Set the Input & Output 	
 	def __init__(self,name,data):
-		self.filePath='Output/'+name+'.xlsx'
+		directory='Output'
+		if not os.path.exists(directory):
+			os.makedirs(directory)
+		self.filePath=directory+'/'+name+'.xlsx'
 		self.data=data
 
 
@@ -113,12 +116,56 @@ class Ete :
 		self.rowIndex+=1+maxShiftRow
 
 
+	#Function Data Loader for one row
+	def single_data_loader_in_one_row(self,sdata):
+		#fill= PatternFill("solid", fgColor="DDDDDD")
+		#border1=copy(self.ws1['A2'].border)
+		#shiftRow=0
+		#maxShiftRow=0
+		for i in sdata:
+			#to process picture alone
+			if (i=='fs_miniProfile'):
+				self.picture=sdata[i]
+				continue
+
+			#shiftRow=0
+			currentSec=i
+			for j in sdata[i]:
+				#shiftRow+=1
+				for k in j:
+					#Get the right colomn
+					tempCol=self.getRightCol(k,currentSec)
+					temp1=self.ws1.cell(column=tempCol , row=self.rowIndex)
+					if (str(temp1.value)=='None'):
+						temp2=''
+					else:	
+						temp2=str(temp1.value)+','
+					temp=self.ws1.cell(column=tempCol , row=self.rowIndex, value=temp2+j[k])
+					self.copyStyle(temp,self.dh[tempCol-1])
+
+			#if(shiftRow>=maxShiftRow):
+			#	maxShiftRow=shiftRow
+
+
+
+		#Shadow all rows that profile use
+		# for rc in range(self.rowIndex+1, self.rowIndex+maxShiftRow+1):
+		# 	for cc in range(len(self.ws1[rc])):
+		# 		curcell=self.ws1.cell(column=cc+1, row=rc)
+		# 		if(curcell.value):
+		# 			continue
+		# 		else:
+		# 			curcell.fill=fill
+		# 			curcell.border = border1
+
+		self.rowIndex+=1
+
 
 
 	#to parse all Data
 	def all_data_loader(self):
 		for i in self.data:
-			self.single_data_loader(i)
+			self.single_data_loader_in_one_row(i)
 
 
 

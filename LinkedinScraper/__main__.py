@@ -69,7 +69,8 @@ class MainClass :
 			yield self.runner.crawl(LPS,
 					incookies=self.incookies,
 					profileUrls=self.profileUrls,
-					outputFile=self.outputFile)
+					outputFile=self.outputFile,
+					numOfp=self.numOfp)
 			self.finalData=LPS.FinalRess
 		reactor.stop()
 
@@ -121,8 +122,10 @@ Examples:
 \'page\' will parse profiles of url page (10 profiles) (Default)''')
 		parser.add_argument('-o',dest='output',action='store',default='NULL',type=str,
 					help='Output file')
-		parser.add_argument('-p','--profile',dest='profiles',action='store_true',default=False,
+		parser.add_argument('-p',dest='profiles',action='store_true',default=False,
 					help='Enable Parse Profiles')
+		parser.add_argument('-r',dest='onerow',action='store_true',default=False,
+					help='Make profiles in Excel file appear in one row')
 
 		args=parser.parse_args()
 		self.UrlsCreator(args.searchUrl, args.num, args.output, args.profiles)
@@ -155,6 +158,7 @@ Examples:
 				nosp=1
 			else:
 				nosp=self.getNosp(self.CCN(num))
+				self.numOfp=num
 
 			#output 
 			print('\n... Parsing Output name File')

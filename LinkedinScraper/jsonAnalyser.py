@@ -24,11 +24,11 @@ class JA:
 
 
 	#Write clear json Data to File
-	def saver(self):
-		directory='cache'
-		filePath='/'.join([directory,self.name+'_Data'])
-		with open(filePath, "w+") as json_file:
-			json_file.writelines(self.out)
+	# def saver(self):
+	# 	directory='cache'
+	# 	filePath='/'.join([directory,self.name+'_Data'])
+	# 	with open(filePath, "w+") as json_file:
+	# 		json_file.writelines(self.out)
 
 
 	#process elements of list
@@ -80,7 +80,7 @@ class JA:
 	#Json file will go to chkprn() and that will send it to DictAn
 	def run(self):
 		self.chkprn(self.jsonData)
-		self.saver()
+		# self.saver()
 
 
 	#make searching about 

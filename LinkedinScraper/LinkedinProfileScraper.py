@@ -30,7 +30,7 @@ class LPS(scrapy.Spider):
 	temp_output=[]
 	outputFile=''
 	FinalRess=[]
-
+	numOfp=0
 
 	def start_requests(self):
 		self.inheaders['csrf-token']=self.incookies['JSESSIONID']
@@ -45,7 +45,11 @@ class LPS(scrapy.Spider):
 		print('\n... LPS reqProfiles running')
 		print('\n... LPS profileUrls is \n',self.profileUrls)
 		self.chechCacheDir()
+		num=0
 		for req in reversed(self.profileUrls):
+			num=+1
+			if(num>=(int(self.numOfp)+1)):
+				break
 			yield scrapy.Request(url=req,headers=self.inheaders,callback=self.parse)
 
 		

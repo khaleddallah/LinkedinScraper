@@ -64,10 +64,12 @@ class CL(scrapy.Spider):
 
 		#Save Cookies in file 
 		directory='cookie_files'
-		filename='cookies'
-		filePath='/'.join([directory,filename])
 		if not os.path.exists(directory):
 			os.makedirs(directory)
+			
+		filename='cookies'
+		filePath='/'.join([directory,filename])
+
 		with open(filePath ,'w+') as f:
 			f.write(str(self.incookies))
 
