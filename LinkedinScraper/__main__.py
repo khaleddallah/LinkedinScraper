@@ -166,7 +166,7 @@ Examples:
 				nosp=1
 			else:
 				nosp=self.getNosp(self.CCN(num))
-				self.numOfp=num
+				self.numOfp=int(num)
 
 
 
