@@ -7,9 +7,9 @@
 
 import scrapy 
 from scrapy.crawler import CrawlerProcess
-import re , os
+import re, os, sys
 import json
-
+import html
 
 class LS(scrapy.Spider):
 	name='LS'
@@ -59,9 +59,21 @@ class LS(scrapy.Spider):
 		for i in (response.text.split('\n')):
 			t=re.findall('\s+{&quot;data&quot;:{&quot;metadata.*',i)
 			if (len(t)>0):
-				dataJson=json.loads(t[0].replace('&quot;','\"'))
-				with open('cache/test.html','w+') as f:
-					json.dump(dataJson, f, indent=4, ensure_ascii = False)
+				temp1=html.unescape(t[0])
+				try:
+					dataJson=json.loads(temp1)
+				except:
+					print(sys.exc_info())
+					print('\n!!! ERROR in make json from data of ',response.url)
+					logFileName=self.outputFile+'.log'
+					print('log file of tha data in ',logFileName)
+					with open('cache/'+logFileName,'w+') as l:
+						l.write(temp1)
+					return(-1)
+
+
+				# with open('cache/test.html','w+') as f:
+				# 	json.dump(dataJson, f, indent=4, ensure_ascii = False)
 				#Get Puplic ID
 				AllElementsList=[]
 				for e in range(len(dataJson["data"]["elements"])):

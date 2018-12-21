@@ -41,6 +41,9 @@ class MainClass :
 
 		self.finalData=[]
 
+
+		self.format=''
+		self.mode=''
 		configure_logging()
 		self.runner = CrawlerRunner()
 
@@ -62,7 +65,6 @@ class MainClass :
 				incookies=self.incookies,
 				searchPageUrls=self.searchPageUrls,
 				outputFile=self.outputFile)
-			#print('\n.............######............\n',LS.profileUrls)
 			self.profileUrls=LS.profileUrls
 		if(self.LPSenable):
 			print('\n... LPS')
@@ -70,7 +72,8 @@ class MainClass :
 					incookies=self.incookies,
 					profileUrls=self.profileUrls,
 					outputFile=self.outputFile,
-					numOfp=self.numOfp)
+					numOfp=self.numOfp,
+					format1=self.format)
 			self.finalData=LPS.FinalRess
 		reactor.stop()
 
@@ -124,16 +127,18 @@ Examples:
 					help='Output file')
 		parser.add_argument('-p',dest='profiles',action='store_true',default=False,
 					help='Enable Parse Profiles')
-		parser.add_argument('-r',dest='onerow',action='store_true',default=False,
-					help='Make profiles in Excel file appear in one row')
-
+		parser.add_argument('-f',dest='format',action='store',default='all',
+					help='json    Json output file\nexcel    Excel file output\nall    Json and Excel output files')
+		parser.add_argument('-m',dest='mode',action='store',default='m',
+					help='1    to make each profile in Excel file appear in one row\nm    to make each profile in Excel file appear in multi row')
 		args=parser.parse_args()
-		self.UrlsCreator(args.searchUrl, args.num, args.output, args.profiles)
+		self.UrlsCreator(args.searchUrl, args.num, args.output, args.profiles, args.format, args.mode)
 
 
 
 	#parse args and build searchPage urls
-	def UrlsCreator(self, searchUrl, num, output, profiles):
+	def UrlsCreator(self, searchUrl, num, output, profiles, format1, mode):
+		#Profile mode
 		if(profiles):
 			#print('\n...Output!@# ',output)
 			self.LSenable=False
@@ -148,17 +153,21 @@ Examples:
 				self.outputFile=output
 
 		
+		#Multi mode
 		else:
 			self.LSenable=True
 			self.LPSenable=True
-			nosp=0 #Num of Search Pages
 
 			#num
+			#Num of Search Pages
+			nosp=0 
+
 			if(num=='page'):
 				nosp=1
 			else:
 				nosp=self.getNosp(self.CCN(num))
-				self.numOfp=num
+				self.numOfp=int(num)
+
 
 			#output 
 			print('\n... Parsing Output name File')
@@ -168,6 +177,7 @@ Examples:
 			else:
 				self.outputFile=output
 			print('\n... ArgParser (fileName):',self.outputFile)
+
 
 			#build searchPage urls
 			if('page' not in searchUrl[0]):
@@ -191,6 +201,13 @@ Examples:
 				temp_url=searchUrl[0]+'&page='+str(init_page_num+i+2)
 				print(i,' : ',temp_url)
 				self.searchPageUrls.append(temp_url)
+
+
+			#Output File
+			self.format=format1
+
+			#Mode of Excel
+			self.mode=mode
 
 
 
@@ -243,8 +260,10 @@ Examples:
 
 
 		#Export to Excel
-		ete1=Ete(self.outputFile,self.finalData)
-		ete1.run()
+		if(self.format=='all' or self.format=='excel'):
+			print('\n...Making Excel File')
+			ete1=Ete(self.outputFile,self.finalData,self.mode)
+			ete1.run()
 
 
 

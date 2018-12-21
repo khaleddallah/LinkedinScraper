@@ -31,6 +31,7 @@ class LPS(scrapy.Spider):
 	outputFile=''
 	FinalRess=[]
 	numOfp=0
+	format1=''
 
 	def start_requests(self):
 		self.inheaders['csrf-token']=self.incookies['JSESSIONID']
@@ -45,11 +46,7 @@ class LPS(scrapy.Spider):
 		print('\n... LPS reqProfiles running')
 		print('\n... LPS profileUrls is \n',self.profileUrls)
 		self.chechCacheDir()
-		num=0
-		for req in reversed(self.profileUrls):
-			num=+1
-			if(num>=(int(self.numOfp)+1)):
-				break
+		for req in reversed(self.profileUrls[:self.numOfp]):
 			yield scrapy.Request(url=req,headers=self.inheaders,callback=self.parse)
 
 		
@@ -158,4 +155,5 @@ class LPS(scrapy.Spider):
 
 	def closed( self, reason ):
 		#save output.json in Output Dir
-		self.saveJsonFile('../Output/'+self.outputFile+'.json',self.FinalRess)
+		if(self.format1=='all' or self.format1=='json'):
+			self.saveJsonFile('../Output/'+self.outputFile+'.json',self.FinalRess)
