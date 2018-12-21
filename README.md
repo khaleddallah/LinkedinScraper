@@ -68,8 +68,7 @@ python LinkedinScraper -n 23 'https://www.linkedin.com/search/results/all/?keywo
 
 
 * Parse <b>17</b> profiles of searchUrl [https://www.linkedin.com/.../?keywords=Robotic&...&](https://www.linkedin.com/search/results/all/?keywords=Robotic&origin=GLOBAL_SEARCH_HEADER)
-and get output as <b>excel</b> file and put all information in <b>one row</b> 
-<br>if you don't set output name by (-o), Name of result files will be value of keywords (<b>Robotic</b>)
+<br>and get output as <b>excel</b> file and put the information of each profile in <b>one row</b> 
 ```
 python LinkedinScraper -n 17 -f excel -m 1 'https://www.linkedin.com/search/results/all/?keywords=Robotic&origin=GLOBAL_SEARCH_HEADER'
 ```
