@@ -117,7 +117,7 @@ Examples:
 		parser=argparse.ArgumentParser(description='Linkedin Scraper\nAuthor: Khaled Dallah',
 									 formatter_class=argparse.RawTextHelpFormatter,
 									 epilog=example_text,
-									 usage='python LinkedinScraper [-h] [-n NUM] [-o OUTPUT] [-p] (searchUrl or profilesUrl)')
+									 usage='python LinkedinScraper [-h] [-n NUM] [-o OUTPUT] [-p] [-f format] [-m excelMode] (searchUrl or profilesUrl)')
 		parser.add_argument('searchUrl',help="URL of Linkedin search URL or Profiles URL",nargs='+')
 		parser.add_argument('-n',dest='num',action='store',type=str,default='page',
 							help='''num of profiles
@@ -129,10 +129,10 @@ Examples:
 					help='Enable Parse Profiles')
 		parser.add_argument('-f',dest='format',action='store',default='all',
 					help='json    Json output file\nexcel    Excel file output\nall    Json and Excel output files')
-		parser.add_argument('-m',dest='mode',action='store',default='m',
+		parser.add_argument('-m',dest='excelMode',action='store',default='m',
 					help='1    to make each profile in Excel file appear in one row\nm    to make each profile in Excel file appear in multi row')
 		args=parser.parse_args()
-		self.UrlsCreator(args.searchUrl, args.num, args.output, args.profiles, args.format, args.mode)
+		self.UrlsCreator(args.searchUrl, args.num, args.output, args.profiles, args.format, args.excelMode)
 
 
 
@@ -144,6 +144,7 @@ Examples:
 			self.LSenable=False
 			self.LPSenable=True
 			self.profileUrls=searchUrl
+			self.numOfp=len(self.profileUrls)
 			#must make error to put output if not set
 			if (output=='NULL'):
 				print('\n!!!ERROR : No name for output file\n')
@@ -158,7 +159,6 @@ Examples:
 			self.LSenable=True
 			self.LPSenable=True
 
-			#num
 			#Num of Search Pages
 			nosp=0 
 
@@ -166,7 +166,8 @@ Examples:
 				nosp=1
 			else:
 				nosp=self.getNosp(self.CCN(num))
-				self.numOfp=int(num)
+				self.numOfp=num
+
 
 
 			#output 
@@ -203,11 +204,11 @@ Examples:
 				self.searchPageUrls.append(temp_url)
 
 
-			#Output File
-			self.format=format1
+		#Output File
+		self.format=format1
 
-			#Mode of Excel
-			self.mode=mode
+		#Mode of Excel
+		self.mode=mode
 
 
 
