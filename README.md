@@ -29,18 +29,25 @@ cd LinkedinScraperProject
 python LinkedinScraper -h
 ```
 <pre>
-usage: python LinkedinScraper [-h] [-n NUM] [-o OUTPUT] [-p] (searchUrl or profilesUrl)
+<b>usage:</b> 
+python LinkedinScraper [-h] [-n NUM] [-o OUTPUT] [-p] [-f format] [-m excelMode] (searchUrl or profilesUrl)
 
 <b>positional arguments:</b>
-  searchUrl      URL of Linkedin search URL or Profiles URL
+  searchUrl     URL of Linkedin search URL or Profiles URL
 
 <b>optional arguments:</b>
-  -h, --help     show this help message and exit
-  -n NUM         num of profiles
-                 ** the number must be lower or equal of result number
-                 'page' will parse profiles of url page (10 profiles) (Default)
-  -o OUTPUT      Output file
-  -p, --profile  Enable Parse Profiles
+  -h, --help    show this help message and exit
+  -n NUM        num of profiles
+                ** the number must be lower or equal of result number
+                'page' will parse profiles of url page (10 profiles) (Default)
+  -o OUTPUT     Output file
+  -p            Enable Parse Profiles
+  -f FORMAT     json    Json output file
+                excel    Excel file output
+                all    Json and Excel output files
+  -m EXCELMODE  1    to make each profile in Excel file appear in one row
+                m    to make each profile in Excel file appear in multi row
+
 
 </pre>
 
@@ -58,6 +65,15 @@ python LinkedinScraper -p -o 'ABC' 'https://www.linkedin.com/in/khaled-dallah/' 
 ```
 python LinkedinScraper -n 23 'https://www.linkedin.com/search/results/all/?keywords=Robotic&origin=GLOBAL_SEARCH_HEADER'
 ```
+
+
+* Parse <b>17</b> profiles of searchUrl [https://www.linkedin.com/.../?keywords=Robotic&...&](https://www.linkedin.com/search/results/all/?keywords=Robotic&origin=GLOBAL_SEARCH_HEADER)
+and get output as <b>excel</b> file and put all information in <b>one row</b> 
+<br>if you don't set output name by (-o), Name of result files will be value of keywords (<b>Robotic</b>)
+```
+python LinkedinScraper -n 17 -f excel -m 1 'https://www.linkedin.com/search/results/all/?keywords=Robotic&origin=GLOBAL_SEARCH_HEADER'
+```
+
 ## Built with
 * Python 3.7
 * Scrapy
