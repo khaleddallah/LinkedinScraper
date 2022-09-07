@@ -1,4 +1,4 @@
-# Linkedin Scraper Project    
+# Linkedin Scraper using Scrapy    
 ![](https://github.com/khaleddallah/LinkedinScraperProject/blob/master/Readme-Images/E.png)
 * Scrape number of profiles that exist in result of Linkedin searchUrl.    
 * Export the content of profiles to Excel and Json files.    
